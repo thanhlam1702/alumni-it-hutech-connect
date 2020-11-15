@@ -3,103 +3,70 @@
     <div class="login__container">
       <div class="form__control">
         <h3>Đăng Nhập</h3>
-        <a-form
-          id="components-form-demo-normal-login"
-          :form="form"
-          class="login-form"
-          @submit="handleSubmit"
-        >
-          <a-form-item>
-            <a-input
-              v-decorator="[
-                'userName',
-                {
-                  rules: [
-                    {
-                      required: true,
-                      message: 'Vui lòng nhập tài khoản hoặc MSSV!',
-                    },
-                  ],
-                },
-              ]"
-              placeholder="Tài khoản / mssv"
-            >
-              <a-icon
-                slot="prefix"
-                type="user"
-                style="color: rgba(0, 0, 0, 0.25)"
-              />
+        <a-form-model ref="ruleForm" :model="form" :rules="rules">
+          <label for="">Tài khoản / MSSV:</label>
+          <a-form-model-item ref="name" prop="name">
+            <a-input v-model="form.name" placeholder="Nhập tài khoản / MSSV">
+              <a-icon slot="prefix" type="user" />
             </a-input>
-          </a-form-item>
-          <a-form-item>
+          </a-form-model-item>
+          <label for="">Mật khẩu:</label>
+          <a-form-model-item ref="password" prop="password">
             <a-input-password
-              v-decorator="[
-                'password',
-                {
-                  rules: [
-                    { required: true, message: 'Vui lòng nhập mật khẩu!' },
-                  ],
-                },
-              ]"
-              type="password"
-              placeholder="Mật khẩu"
+              v-model="form.password"
+              allow-clear
+              placeholder="Nhập mật khẩu"
             >
-              <a-icon
-                slot="prefix"
-                type="lock"
-                style="color: rgba(0, 0, 0, 0.25)"
-              />
+              <a-icon slot="prefix" type="lock" />
             </a-input-password>
-          </a-form-item>
-          <a-form-item>
-            <a-checkbox
-              v-decorator="[
-                'remember',
-                {
-                  valuePropName: 'checked',
-                  initialValue: true,
-                },
-              ]"
-            >
-              Nhớ mật khẩu
-            </a-checkbox>
+          </a-form-model-item>
+          <a-form-model-item>
+            <a-checkbox> Nhớ mật khẩu </a-checkbox>
             <nuxt-link to="/forgot-password" class="login-form-forgot"
               >Quên mật khẩu
             </nuxt-link>
-            <a-button
-              type="primary"
-              html-type="submit"
-              class="login-form-button"
-            >
+            <a-button type="primary" style="width: 100%" @click="onSubmit">
               Đăng nhập
             </a-button>
-            Hoặc
-            <nuxt-link to="/register">Đăng ký ngay!</nuxt-link>
-          </a-form-item>
-        </a-form>
+            <div class="or__register">
+              Hoặc <nuxt-link to="/register">Đăng ký ngay!</nuxt-link>
+            </div>
+          </a-form-model-item>
+        </a-form-model>
       </div>
     </div>
-    <div class="login__banner"></div>
+    <div class="bg__login"></div>
   </div>
 </template>
 <script>
 export default {
   layout: 'auth',
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'normal_login' })
+  data() {
+    return {
+      form: {
+        name: null,
+        password: null,
+      },
+      rules: {
+        name: {
+          required: true,
+          message: 'Vui lòng nhập tài khoản hoặc MSSV!',
+        },
+        password: {
+          required: true,
+          message: 'Vui lòng nhập mật khẩu!',
+        },
+      },
+    }
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-        }
-      })
+    onSubmit() {
+      this.$refs.ruleForm.validate((valid) => {})
     },
   },
   head() {
     return {
-      title: 'Login',
+      title: 'Đăng nhập',
     }
   },
 }
