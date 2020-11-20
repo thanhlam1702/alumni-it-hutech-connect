@@ -1,7 +1,62 @@
 //Footer styles
 
 footer{
-    flex-shrink: 0;
-    height: 100px;
+    width: 100%;
+    padding: 32px;
     background: @color-default;
+    .footer__top{
+        display: flex;
+    }
+    .logo{
+        width: 40%;
+    }
+    .contact{
+        width: 40%;
+        color: @color-text-default;
+        .location{
+            display: flex;
+            p{
+                padding: 0.4rem 0;
+            }
+        }
+        &__icon{
+            font-size: 2.5rem;
+            padding: 1rem;
+            padding-left: 0;
+            margin: auto 0;        
+        }
+        span{
+            height: 100%;
+        }
+        .location, .mail, .phone{
+            display: flex;
+            align-items: center;
+        }
+    }
+    .follow__us{
+        width: 20%;
+    }
+    .title{
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        color: @color-text-default;
+    }
+    hr{
+        height: 0.1rem;
+        width: 50%;
+        background: @color-text-default;
+        border: none;
+        margin-bottom: 3rem;
+    }
+    .footer__bottom{
+        hr{
+            width: 100%;
+            margin: auto;
+            margin: 32px 0;
+        }
+        .cre{
+            color: @color-text-default;
+            font-size: 2rem;
+        }
+    }
 }

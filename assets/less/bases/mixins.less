@@ -1,0 +1,19 @@
+.style-hover-button(){
+    &::before{
+        content: "";
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 0.2rem;
+        background: #fff;
+        transform: scaleX(0);
+        transition: all 0.4s;
+        transform-origin: center left;
+    }
+    &:hover::before{
+        transform: scaleX(1);
+        transition: all 0.4s;
+        transform-origin: center right;
+    }
+}

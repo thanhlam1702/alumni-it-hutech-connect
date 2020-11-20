@@ -2,18 +2,9 @@
   <div class="container">
     <div class="login__container">
       <div class="form__control">
-        <h3>Đăng Ký</h3>
+        <h3>Quên mật khẩu</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">
-          <a-form-model-item ref="name" label="Tài khoản / MSSV" prop="name">
-            <a-input
-              v-model="form.name"
-              placeholder="Nhập tài khoản / MSSV"
-              allow-clear
-            >
-              <a-icon slot="prefix" type="user" />
-            </a-input>
-          </a-form-model-item>
-          <a-form-model-item ref="email" label="Email" prop="email">
+          <a-form-model-item ref="email" label="Nhập email" prop="email">
             <a-input
               v-model="form.email"
               placeholder="example@email.com"
@@ -22,36 +13,14 @@
               <a-icon slot="prefix" type="mail" />
             </a-input>
           </a-form-model-item>
-          <a-form-model-item label="Mật khẩu" prop="password" has-feedback>
-            <a-input
-              v-model="form.password"
-              placeholder="Lớn hơn 6 ký tự"
-              type="password"
+          <a-form-model-item>
+            <a-button type="primary" style="width: 100%" @click="onSubmit">
+              Quên mật khẩu
+            </a-button>
+            <nuxt-link to="/login">
+              <a-icon type="arrow-left" />Trở về</nuxt-link
             >
-              <a-icon slot="prefix" type="lock" />
-            </a-input>
           </a-form-model-item>
-          <a-form-model-item
-            label="Nhập lại mật khẩu"
-            prop="confirm"
-            has-feedback
-          >
-            <a-input
-              v-model="form.confirm"
-              placeholder="Nhập lại mật khẩu"
-              type="password"
-            >
-              <a-icon slot="prefix" type="lock" />
-            </a-input>
-          </a-form-model-item>
-          <a-button type="primary" style="width: 100%" @click="onSubmit">
-            Đăng nhập
-          </a-button>
-          <a-form-model-item
-            ><div class="or__register">
-              Hoặc <nuxt-link to="/login">Đăng nhập ngay!</nuxt-link>
-            </div></a-form-model-item
-          >
         </a-form-model>
       </div>
     </div>
@@ -62,53 +31,16 @@
 export default {
   layout: 'auth',
   data() {
-    const validatePass = (rule, value, callback) => {
-      if (this.form.confirm !== null || this.form.confirm !== '') {
-        this.$refs.ruleForm.validateField('confirm')
-      }
-      callback()
-    }
-    const validateConfirm = (rule, value, callback) => {
-      if (value !== this.form.password) {
-        callback(new Error('Mật khẩu không trùng khớp!'))
-      } else {
-        callback()
-      }
-    }
     return {
       form: {
-        name: null,
-        emai: null,
-        password: null,
-        confirm: null,
+        email: null,
       },
       rules: {
-        name: {
-          required: true,
-          message: 'Vui lòng nhập tài khoản hoặc MSSV!',
-        },
         email: [
-          {
-            type: 'email',
-            message: 'Định dạng email không chính xác!',
-          },
+          { type: 'email', message: 'Định dạng email không chính xác!' },
           {
             required: true,
-            message: 'Vui lòng nhập email!',
-          },
-        ],
-        password: [
-          { validator: validatePass, trigger: 'change' },
-          {
-            required: true,
-            message: 'Vui lòng nhập mật khẩu!',
-          },
-        ],
-        confirm: [
-          { validator: validateConfirm, trigger: 'change' },
-          {
-            required: true,
-            message: 'Vui lòng nhập lại mật khẩu!',
+            message: 'Vui lòng nhập email để lấy lại mật khẩu!',
           },
         ],
       },
@@ -121,7 +53,7 @@ export default {
   },
   head() {
     return {
-      title: 'Login',
+      title: 'Quên Mật Khẩu',
     }
   },
 }
