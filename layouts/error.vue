@@ -5,7 +5,9 @@
     sub-title="Sorry, the page you visited does not exist."
   >
     <template #extra>
-      <a-button type="primary" @click.prevent="backHome"> Back Home </a-button>
+      <a-button type="primary" @click.prevent="backHome">
+        Trở về trang chủ
+      </a-button>
     </template>
   </a-result>
 </template>

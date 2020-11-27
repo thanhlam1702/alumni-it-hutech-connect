@@ -45,7 +45,7 @@
             </a-input>
           </a-form-model-item>
           <a-button type="primary" style="width: 100%" @click="onSubmit">
-            Đăng nhập
+            Đăng ký
           </a-button>
           <a-form-model-item
             ><div class="or__register">

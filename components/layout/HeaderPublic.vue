@@ -3,12 +3,9 @@
     <nav class="navbar">
       <div class="logo"></div>
       <ul class="menu">
-        <li class="menu__item"><nuxt-link to="/about">About</nuxt-link></li>
-        <li class="menu__item">
-          <nuxt-link to="/communities-clubs">Communities & clubs</nuxt-link>
+        <li v-for="(item, index) in listMenu" :key="index" class="menu__item">
+          <nuxt-link :to="'/' + item.link">{{ item.text }}</nuxt-link>
         </li>
-        <li class="menu__item"><nuxt-link to="/events">Events</nuxt-link></li>
-        <li class="menu__item"><nuxt-link to="/news">News</nuxt-link></li>
       </ul>
       <div class="nav__right">
         <nuxt-link to="/register" class="nav__right-item">Register</nuxt-link>
@@ -17,3 +14,18 @@
     </nav>
   </header>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      listMenu: [
+        { link: 'about', text: 'About' },
+        { link: 'communities-clubs', text: 'Communities & clubs' },
+        { link: 'events', text: 'Events' },
+        { link: 'news', text: 'News' },
+      ],
+    }
+  },
+}
+</script>

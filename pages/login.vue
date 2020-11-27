@@ -31,6 +31,9 @@
             <div class="or__register">
               Hoặc <nuxt-link to="/register">Đăng ký ngay!</nuxt-link>
             </div>
+            <nuxt-link to="/">
+              <a-icon type="arrow-left" />Trở về trang chủ</nuxt-link
+            >
           </a-form-model-item>
         </a-form-model>
       </div>

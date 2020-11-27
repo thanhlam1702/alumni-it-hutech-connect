@@ -9,21 +9,16 @@
           <div class="location">
             <a-icon type="environment" class="contact__icon location__icon" />
             <div>
-              <p>Trụ sở: 475A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM</p>
-              <p>Cơ sở 475B:475B Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM</p>
-              <p>
-                Cơ sở Ung Văn Khiêm: 31/36 Ung Văn Khiêm, P.25, Q.Bình Thạnh,
-                TP.HCM
-              </p>
+              <p v-for="(item, index) in contact" :key="index">{{ item }}</p>
             </div>
           </div>
           <div class="mail">
             <a-icon class="contact__icon mail__icon" type="mail" />
-            <span>hutech@hutech.edu.vn</span>
+            <span>{{ mail }}</span>
           </div>
           <div class="phone">
             <a-icon type="phone" class="contact__icon phone__icon" />
-            <span>(028) 5445 7777 - Fax: (028) 5445 4444</span>
+            <span>{{ phone }}</span>
           </div>
         </div>
       </div>
@@ -34,12 +29,32 @@
           <a href="https://www.facebook.com/hutechuniversity"
             ><a-icon type="facebook"
           /></a>
+          <a href="https://www.instagram.com/hutechuniversity/"
+            ><a-icon type="instagram"
+          /></a>
         </div>
       </div>
     </div>
     <div class="footer__bottom">
       <hr />
-      <p class="cre">2020 Hutech IT Alumni Association by The Immortal team</p>
+      <p class="cre">{{ cre }}</p>
     </div>
   </footer>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      contact: [
+        'Trụ sở: 475A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM',
+        'Cơ sở 475B:475B Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM',
+        'Cơ sở Ung Văn Khiêm: 31/36 Ung Văn Khiêm, P.25, Q.Bình Thạnh, TP.HCM',
+      ],
+      mail: 'hutech@hutech.edu.vn',
+      phone: '(028) 5445 7777 - Fax: (028) 5445 4444',
+      cre: '2020 Hutech IT Alumni Association by The Immortal team',
+    }
+  },
+}
+</script>

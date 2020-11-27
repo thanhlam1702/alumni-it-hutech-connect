@@ -10,20 +10,39 @@ header{
     .logo{
         width: 30%;
     }
-    .menu{
-        width: 20%;
-        // margin-left: auto;
-        ul{
+    .search__bar{
+        width: 30%;
+        display: flex;
+        align-items: center;
+        input{
+            border-radius: 2rem;
+        }
+    }
+    .nav__right{
+        width: 40%;
+        display: flex;
+        &-list{
             display: flex;
             align-items: center;
             height: 100%;
+            width: 50%;
+            padding: 0 5rem;
         }
-        li{
-            font-size: 16px;
-            padding: 1rem;
+        &-user{
+            display: flex;
+            align-items: center;
+        }
+        .list__item{
             a{
-                color: #fff;
+                color: @color-text-default;
+                font-size: 3rem;
+                padding: 0 1rem;
             }
         }
+    }
+}
+.ant-dropdown-menu-item{
+    .icon{
+        margin-right: 8px;
     }
 }
