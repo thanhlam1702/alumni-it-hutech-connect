@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="login__container">
+  <div class="main-wrapper">
+    <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Quên mật khẩu</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">

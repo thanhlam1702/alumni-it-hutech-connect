@@ -1,6 +1,8 @@
-.style-hover-button(){
-    &::before{
-        content: "";
+// Mixins file
+
+.style-hover-button() {
+    &::before {
+        content: '';
         width: 100%;
         position: absolute;
         left: 0;
@@ -8,12 +10,94 @@
         height: 0.2rem;
         background: #fff;
         transform: scaleX(0);
-        transition: all 0.4s;
+        transition: @t @cubic;
         transform-origin: center left;
     }
-    &:hover::before{
+
+    &:hover::before {
         transform: scaleX(1);
-        transition: all 0.4s;
+        transition: @t @cubic;
         transform-origin: center right;
+    }
+}
+
+// canh giua tren va duoi
+.pos-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// canh giua theo truc x
+.pos-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+// canh giua theo truc y
+.pos-y {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.flex-justify(@justify) {
+    display: flex;
+    justify-content: @justify;
+}
+
+.flex-align(@align) {
+    display: flex;
+    align-items: @align;
+}
+
+.flex(@justify, @align) {
+    display: flex;
+    justify-content: @justify;
+    align-items: @align;
+}
+
+.dot-para-text(@column) {
+    display: -webkit-box;
+    -webkit-line-clamp: @column;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.desktop-large(@content) {
+    @media (max-width: @lg-max) {
+        @content();
+    }
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+// for responsive
+.desktop(@content) {
+    @media (max-width: @md-max) {
+        @content();
+    }
+}
+
+.tablet(@content) {
+    @media screen and (max-width: @sm-max) and (min-height: 500px) {
+        @content();
+    }
+}
+
+.mobile(@content) {
+    @media screen and (min-width: 320px) and (max-width: @xs-max) {
+        @content();
     }
 }

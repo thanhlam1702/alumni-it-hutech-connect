@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="login__container">
+  <div class="main-wrapper">
+    <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Đăng Nhập</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">
@@ -63,8 +63,19 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.$refs.ruleForm.validate((valid) => {})
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            name: this.form.name,
+            password: this.form.password,
+          },
+        })
+        this.$router.push('/')
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
   head() {

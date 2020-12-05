@@ -1,19 +1,24 @@
-//Header styles
 
+//Header styles
 header{
-    flex-shrink: 0;
-}
-.navbar{
-    height: 56px;
-    background: @color-default;
-    display: flex;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    transition: @t @cubic;
+    width: 100%;
+    .container-fluid{
+        height: 100%;
+        background: @color-default;
+        display: flex;
+    }
     .logo{
         width: 30%;
     }
     .search__bar{
         width: 30%;
-        display: flex;
-        align-items: center;
+        .flex-align(center);
         input{
             border-radius: 2rem;
         }
@@ -22,19 +27,17 @@ header{
         width: 40%;
         display: flex;
         &-list{
-            display: flex;
-            align-items: center;
             height: 100%;
             width: 50%;
             padding: 0 5rem;
+            .flex-align(center);
         }
         &-user{
-            display: flex;
-            align-items: center;
+            .flex-align(center);
         }
         .list__item{
             a{
-                color: @color-text-default;
+                color: @text-white;
                 font-size: 3rem;
                 padding: 0 1rem;
             }
@@ -46,3 +49,4 @@ header{
         margin-right: 8px;
     }
 }
+

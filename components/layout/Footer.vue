@@ -3,8 +3,7 @@
     <div class="footer__top">
       <div class="logo"></div>
       <div class="contact">
-        <h3 class="title">Contact</h3>
-        <hr />
+        <h3 class="title --line-style">Contact</h3>
         <div class="content">
           <div class="location">
             <a-icon type="environment" class="contact__icon location__icon" />
@@ -23,8 +22,7 @@
         </div>
       </div>
       <div class="follow__us">
-        <h3 class="title">Follow us</h3>
-        <hr />
+        <h3 class="title --line-style">Follow us</h3>
         <div class="content">
           <a href="https://www.facebook.com/hutechuniversity"
             ><a-icon type="facebook"
@@ -35,8 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="footer__bottom">
-      <hr />
+    <div class="footer__bottom --line-style">
       <p class="cre">{{ cre }}</p>
     </div>
   </footer>

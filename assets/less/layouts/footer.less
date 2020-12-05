@@ -4,15 +4,28 @@ footer{
     width: 100%;
     padding: 32px;
     background: @color-default;
+    
     .footer__top{
         display: flex;
+        .title{
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: @text-white;
+            line-height: 6rem;
+        }
+        .--line-style{
+            &::before{
+                width: 50%;
+                bottom: 0;
+            }
+        }
     }
     .logo{
         width: 40%;
     }
     .contact{
         width: 40%;
-        color: @color-text-default;
+        color: @text-white;
         .location{
             display: flex;
             p{
@@ -36,31 +49,16 @@ footer{
     .follow__us{
         width: 20%;
         a{
-            color: @color-text-default;
+            color: @text-white;
             font-size: 32px;
         }
     }
-    .title{
-        font-size: 3rem;
-        margin-bottom: 2rem;
-        color: @color-text-default;
-    }
-    hr{
-        height: 0.1rem;
-        width: 50%;
-        background: @color-text-default;
-        border: none;
-        margin-bottom: 3rem;
-    }
     .footer__bottom{
-        hr{
-            width: 100%;
-            margin: auto;
-            margin: 32px 0;
-        }
+        margin-top: 20px;
         .cre{
-            color: @color-text-default;
+            color: @text-white;
             font-size: 2rem;
+            line-height: 6rem;
         }
     }
 }

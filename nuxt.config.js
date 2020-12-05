@@ -16,7 +16,12 @@ export default {
       },
     ],
   },
-
+  // server listen
+  server: {
+    port: 8000, // default: 3000
+    // eslint-disable-next-line prettier/prettier
+    host: '0.0.0.0' // default: localhost
+  },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['@/assets/less/all.less'],
 
@@ -42,6 +47,7 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/auth',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -57,6 +63,28 @@ export default {
         lessOptions: {
           javascriptEnabled: true,
         },
+      },
+    },
+  },
+  env: {
+    baseApiUrl: 'http://localhost:3000',
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          // eslint-disable-next-line prettier/prettier
+          login: { url: 'http://localhost:3000/api/auth/login', method: 'post', propertyName: 'token' },
+          logout: {
+            url: 'http://localhost:3000/api/auth/logout',
+            method: 'post',
+          },
+          // eslint-disable-next-line prettier/prettier
+          user: { url: 'http://localhost:3000/api/auth/user', method: 'get', propertyName: 'user' },
+          // eslint-disable-next-line prettier/prettier
+          propertyName: "token",
+        },
+        logout: true,
       },
     },
   },

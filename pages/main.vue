@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="flex-grow: 1">
+  <div class="main-wrapper">
     <BannerHome />
   </div>
 </template>

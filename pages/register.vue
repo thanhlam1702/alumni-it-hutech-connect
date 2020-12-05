@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="login__container">
+  <div class="main-wrapper">
+    <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Đăng Ký</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">
@@ -44,7 +44,7 @@
               <a-icon slot="prefix" type="lock" />
             </a-input>
           </a-form-model-item>
-          <a-button type="primary" style="width: 100%" @click="onSubmit">
+          <a-button type="primary" style="width: 100%" @click="onRegister">
             Đăng ký
           </a-button>
           <a-form-model-item
@@ -125,6 +125,37 @@ export default {
     onSubmit() {
       // Xử lý gọi api
       this.$refs.ruleForm.validate((valid) => {})
+    },
+    async onRegister() {
+      try {
+        // eslint-disable-next-line prefer-const
+        let data = {
+          name: this.form.name,
+          email: this.form.email,
+          password: this.form.password,
+        }
+        // eslint-disable-next-line prefer-const
+        let response = await this.$axios.$post(
+          'http://localhost:3000/api/auth/register',
+          data
+        )
+
+        // eslint-disable-next-line no-console
+        console.log(response)
+
+        if (response.success) {
+          this.$auth.loginWith('local', {
+            data: {
+              name: this.form.name,
+              password: this.form.password,
+            },
+          })
+          this.$router.push('/')
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(err)
+      }
     },
   },
   head() {

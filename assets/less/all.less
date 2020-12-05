@@ -1,17 +1,22 @@
+// reset file style of css default browser
+@import "bases/reset.less";
+
 // import ant design vue styles
 @import "~ant-design-vue/dist/antd";
 
-// import variables
-@import "variables";
 
 // import base styles
+@import "bases/variables";
 @import "bases/global";
 @import "bases/mixins";
+@import "bases/elements.less";
 
 // import layout styles
+@import "layouts/layout.less";
 @import "layouts/header";
 @import "layouts/footer";
 @import "layouts/header-public";
+
 //import pages style
 @import "pages/login";
 @import "pages/home";
