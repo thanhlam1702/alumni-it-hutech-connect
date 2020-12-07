@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-if="!$auth.$state.loggedIn" class="container-fluid">
     <div class="footer__top">
       <div class="logo"></div>
       <div class="contact">
@@ -34,6 +34,11 @@
       </div>
     </div>
     <div class="footer__bottom --line-style">
+      <p class="cre">{{ cre }}</p>
+    </div>
+  </footer>
+  <footer v-else class="container-fluid footer-login">
+    <div class="footer__bottom">
       <p class="cre">{{ cre }}</p>
     </div>
   </footer>

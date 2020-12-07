@@ -1,9 +1,5 @@
 // let prevScroll = window.pageYOffset
 // window.onscroll = function () {
-//   myFunction()
-// }
-
-// function myFunction() {
 //   const header = document.getElementsByTagName('header')[0]
 
 //   const currentScroll = window.pageYOffset

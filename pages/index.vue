@@ -6,12 +6,10 @@
 
 <script>
 import BannerHome from '@/components/layout/BannerHome'
-import MainJs from '@/assets/js/main'
 export default {
   components: {
     BannerHome,
   },
-  mixins: [MainJs],
   head() {
     return {
       title: 'IT Hutech Connect',

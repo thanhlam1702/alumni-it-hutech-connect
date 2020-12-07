@@ -1,49 +1,113 @@
 
 //Header styles
 header{
-    height: 80px;
+    height: 60px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
     transition: @t @cubic;
     width: 100%;
-    .container-fluid{
+    background: @color-default;
+    .container{
         height: 100%;
-        background: @color-default;
-        display: flex;
+        position: relative;
+        .flex(space-between,center);        
     }
     .logo{
-        width: 30%;
+        height: 100%;
+        width: 110px;
+        .flex-align(center);
+        a{
+            height: 100%;
+        }
     }
     .search__bar{
-        width: 30%;
+        width: 300px;
+        .pos-middle;
         .flex-align(center);
         input{
             border-radius: 2rem;
         }
     }
     .nav__right{
-        width: 40%;
-        display: flex;
+        height: 100%;
+        .flex-align(center);
         &-list{
             height: 100%;
-            width: 50%;
-            padding: 0 5rem;
-            .flex-align(center);
+            margin-right: 20px;
+            margin-bottom: initial;
+            display: flex
         }
         &-user{
             .flex-align(center);
         }
         .list__item{
+            height: 100%;
             a{
+                height: 100%;
                 color: @text-white;
                 font-size: 3rem;
+                padding: 0 1.5rem;
+                display: block;
+                .flex-align(center);
+            }
+            i{
+                position: relative;
+                &::before{
+                    content: '';
+                    position: absolute;
+                    width: 40px;
+                    height: 40px;
+                    background: #f0f2f5;
+                    object-fit: cover;
+                    z-index: -1;
+                    border-radius: 50%;
+                    .pos-middle;
+                }
+
+            }
+        }
+    }
+    .container-fluid{
+        height: 100%;
+        .flex(space-between, center);
+        .menu{
+            height: 100%;
+            display: flex;
+            .menu__item{
+                height: 100%;
+                position: relative;
+                .hover-button-1(#fff, 2px);
+                a{
+                    height: 100%;
+                    padding: 0 3rem;
+                    .flex-align(center);
+                    .text(1.8rem, inherit, 2rem, @text-white, inherit);
+                }
+                &::before{
+                    bottom: 10px;
+                }
+            }
+        }
+        .nav__right{
+            height: 100%;
+            display: flex;
+            .nav__right-item{
                 padding: 0 1rem;
+                height: 100%;
+                position: relative;
+                .flex-align(center);
+                .text(1.8rem, inherit, 2rem, @text-white, inherit);
+                .hover-button-1(#fff, 2px);
+                &::before{
+                    bottom: 10px;
+                }
             }
         }
     }
 }
+
 .ant-dropdown-menu-item{
     .icon{
         margin-right: 8px;

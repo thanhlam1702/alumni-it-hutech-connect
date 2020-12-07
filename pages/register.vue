@@ -61,6 +61,8 @@
 <script>
 export default {
   layout: 'auth',
+  middleware: 'auth',
+  auth: 'guest',
   data() {
     // Kiểm tra khi nhập mật khảu phải lớn hơn 6 ký tự và gồm có chữ và số
     const validatePass = (rule, value, callback) => {
@@ -84,7 +86,7 @@ export default {
     return {
       form: {
         name: null,
-        emai: null,
+        email: null,
         password: null,
         confirm: null,
       },
@@ -139,10 +141,6 @@ export default {
           'http://localhost:3000/api/auth/register',
           data
         )
-
-        // eslint-disable-next-line no-console
-        console.log(response)
-
         if (response.success) {
           this.$auth.loginWith('local', {
             data: {

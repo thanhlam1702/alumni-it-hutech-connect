@@ -44,6 +44,12 @@
 <script>
 export default {
   layout: 'auth',
+  middleware: 'auth',
+  auth: {
+    strategies: {
+      local: false,
+    },
+  },
   data() {
     return {
       form: {
@@ -72,9 +78,23 @@ export default {
             password: this.form.password,
           },
         })
-        this.$router.push('/')
+        this.openNotification('success')
+        setTimeout(function () {
+          this.$router.push('/')
+        }, 2000)
       } catch (err) {
-        console.log(err)
+        this.openNotification('error')
+      }
+    },
+    openNotification(type) {
+      if (type === 'error') {
+        this.$notification[type]({
+          message: 'Đăng nhập thất bại',
+        })
+      } else {
+        this.$notification[type]({
+          message: 'Đăng nhập thành công',
+        })
       }
     },
   },

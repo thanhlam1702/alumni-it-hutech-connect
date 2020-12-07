@@ -1,19 +1,42 @@
 <template>
   <header v-if="$auth.$state.loggedIn">
-    <div class="container-fluid">
-      <div class="logo">Logo</div>
+    <div class="container">
+      <div class="logo">
+        <nuxt-link to="/"
+          ><img src="~/assets/images/logo.svg" alt="IT alimni association"
+        /></nuxt-link>
+      </div>
       <div class="search__bar">
         <a-input-search
-          placeholder="Tìm kiếm trên IT Huetch Connect"
+          placeholder="Tìm kiếm trên IT Hutech Connect"
           style="width: 100%"
         />
       </div>
       <div class="nav__right">
         <ul class="nav__right-list">
-          <li v-for="(item, index) in listNav" :key="index" class="list__item">
-            <nuxt-link :to="'/' + item.link"
-              ><a-icon :type="item.icon"
-            /></nuxt-link>
+          <li class="list__item">
+            <nuxt-link to="/"
+              ><i class="icon">
+                <img src="~/assets/images/icon/home.svg" alt="" /></i
+            ></nuxt-link>
+          </li>
+          <li class="list__item">
+            <nuxt-link to="/group"
+              ><i class="icon">
+                <img src="~/assets/images/icon/group.svg" alt="" /></i
+            ></nuxt-link>
+          </li>
+          <li class="list__item">
+            <nuxt-link to="/message"
+              ><i class="icon">
+                <img src="~/assets/images/icon/message.svg" alt="" /></i
+            ></nuxt-link>
+          </li>
+          <li class="list__item">
+            <nuxt-link to="/notification"
+              ><i class="icon">
+                <img src="~/assets/images/icon/bell.svg" alt="" /></i
+            ></nuxt-link>
           </li>
         </ul>
         <div class="nav__right-user">
@@ -52,7 +75,11 @@
   </header>
   <header v-else class="header__public">
     <div class="container-fluid">
-      <div class="logo"></div>
+      <div class="logo">
+        <nuxt-link to="/"
+          ><img src="~/assets/images/logo.svg" alt="IT alimni association"
+        /></nuxt-link>
+      </div>
       <ul class="menu">
         <li v-for="(item, index) in listMenu" :key="index" class="menu__item">
           <nuxt-link :to="'/' + item.link">{{ item.text }}</nuxt-link>
@@ -65,22 +92,31 @@
     </div>
   </header>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      listNav: [
-        { link: '', icon: 'home' },
-        { link: 'group', icon: 'team' },
-        { link: 'message', icon: 'message' },
-        { link: 'notification', icon: 'notification' },
-      ],
       listMenu: [
         { link: 'about', text: 'About' },
         { link: 'communities-clubs', text: 'Communities & clubs' },
         { link: 'events', text: 'Events' },
         { link: 'news', text: 'News' },
       ],
+    }
+  },
+  mounted() {
+    let prevScroll = window.pageYOffset
+    window.onscroll = function () {
+      const header = document.getElementsByTagName('header')[0]
+
+      const currentScroll = window.pageYOffset
+      if (prevScroll > currentScroll) {
+        header.style.top = '0'
+      } else {
+        header.style.top = '-80px'
+      }
+      prevScroll = currentScroll
     }
   },
   methods: {
