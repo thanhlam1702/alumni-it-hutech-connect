@@ -49,8 +49,11 @@
 export default {
   data() {
     return {
-      user: this.$store.getters.user,
+      user: {},
     }
+  },
+  beforeMount() {
+    return (this.user = this.$store.getters.user)
   },
 }
 </script>

@@ -21,11 +21,18 @@ section{
         &-item{
             padding: 20px 0;
             cursor: pointer;
-            position: relative;
             .text(1.8rem, inherit, 2rem, @black-cl, inherit);
-            .hover-button-1(@color-default, 2px);
-            &::before{
-                bottom: 2px;
+            a{
+                position: relative;
+                .hover-button-1(@color-default, 2px);
+                &::before{
+                    bottom: -6px;
+                }
+            }
+            .nuxt-link-active{
+                &::before{
+                    transform: scaleX(1);
+                }
             }
         }
     }

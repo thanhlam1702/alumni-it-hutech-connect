@@ -79,9 +79,6 @@ export default {
           },
         })
         this.openNotification('success')
-        setTimeout(function () {
-          this.$router.push('/')
-        }, 2000)
       } catch (err) {
         this.openNotification('error')
       }
