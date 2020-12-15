@@ -1,5 +1,5 @@
 <template>
-  <div class="main-wrapper">
+  <main class="main-wrapper auth">
     <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Đăng Ký</h3>
@@ -55,8 +55,14 @@
         </a-form-model>
       </div>
     </div>
-    <div class="bg__login"></div>
-  </div>
+    <div class="bg__login">
+      <img
+        class="bg__login-img"
+        src="~/assets/images/bg_login.svg"
+        alt="Alumni IT Hutech"
+      />
+    </div>
+  </main>
 </template>
 <script>
 export default {

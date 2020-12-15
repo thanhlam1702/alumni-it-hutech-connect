@@ -1,5 +1,5 @@
 <template>
-  <div class="main-wrapper">
+  <div class="main-wrapper auth">
     <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Quên mật khẩu</h3>
@@ -24,7 +24,13 @@
         </a-form-model>
       </div>
     </div>
-    <div class="bg__login"></div>
+    <div class="bg__login">
+      <img
+        class="bg__login-img"
+        src="~/assets/images/bg_login.svg"
+        alt="Alumni IT Hutech"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -49,6 +55,29 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {})
+      this.$axios
+        .$post(process.env.baseApiUrl + `/api/auth/lostPassword`, this.form)
+        .then((data) => {
+          this.openNotification('success')
+          this.$router.push('/login')
+        })
+        .catch((e) => {
+          this.openNotification('error')
+          // eslint-disable-next-line no-console
+          console.log(e)
+        })
+    },
+    openNotification(type) {
+      if (type === 'error') {
+        this.$notification[type]({
+          message: 'Lấy mật khẩu thất bại!',
+        })
+      } else {
+        this.$notification[type]({
+          message:
+            'Mật khẩu mới đã được gửi đên Email của bạn, Kiểm tra và đăng nhập lại!',
+        })
+      }
     },
   },
   head() {

@@ -50,10 +50,7 @@
             </a-form-model-item>
             <div class="profile__info-item button">
               <a-button type="primary" @click="onSubmit"> Lưu </a-button>
-              <a-button
-                style="background-color: #e4e6eb"
-                @click="this.$router.back()"
-              >
+              <a-button style="background-color: #e4e6eb" @click="onBack">
                 Trở về
               </a-button>
             </div>
@@ -92,6 +89,10 @@ export default {
         newPass: null,
         confirm: null,
       },
+      pass: {
+        password: null,
+        password2: null,
+      },
       rules: {
         oldPass: {
           required: true,
@@ -115,8 +116,28 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
+      this.pass.password = this.form.oldPass
+      this.pass.password2 = this.form.newPass
       this.$refs.ruleForm.validate((valid) => {})
+      try {
+        const result = await this.$axios.$put(
+          process.env.baseApiUrl + `/api/auth/user`,
+          this.pass
+        )
+        if (result.success) {
+          this.$notification.success({
+            message: 'Đổi mật khẩu thành công',
+          })
+        }
+      } catch (e) {
+        this.$notification.error({
+          message: 'Nhập sai mật khẩu cũ',
+        })
+      }
+    },
+    onBack() {
+      this.$router.back()
     },
   },
 }

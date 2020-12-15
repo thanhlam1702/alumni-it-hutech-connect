@@ -40,11 +40,15 @@
           </li>
         </ul>
         <div class="nav__right-user">
-          <a-dropdown :trigger="['hover']">
+          <a-dropdown :trigger="['hover', 'click']">
             <a class="ant-dropdown-link">
               <a-avatar
                 :size="40"
-                src="https://scontent-xsp1-1.xx.fbcdn.net/v/t1.0-1/s320x320/84687227_2512620948993884_221115220024623104_n.jpg?_nc_cat=110&ccb=2&_nc_sid=7206a8&_nc_ohc=424qpho3fzsAX-7s-iJ&_nc_ht=scontent-xsp1-1.xx&tp=7&oh=948fd3ecc9916bc72265dcc2ef8bb6c1&oe=5FE153A8"
+                :src="
+                  this.$store.getters.user.avatar !== undefined
+                    ? user.avatar
+                    : '/_nuxt/assets/images/avatart-default.jpg'
+                "
               />
             </a>
             <a-menu slot="overlay">
@@ -89,6 +93,24 @@
         <nuxt-link to="/register" class="nav__right-item">Register</nuxt-link>
         <nuxt-link to="/login" class="nav__right-item">Login</nuxt-link>
       </div>
+      <ul class="menu-mobile" :class="{ active: isActive }">
+        <li
+          v-for="(item, index) in listMenu"
+          :key="index"
+          class="menu-mobile-item"
+        >
+          <nuxt-link :to="'/' + item.link">{{ item.text }}</nuxt-link>
+        </li>
+        <li class="menu-mobile-item">
+          <nuxt-link to="/register">Register</nuxt-link>
+        </li>
+        <li class="menu-mobile-item">
+          <nuxt-link to="/login">Login</nuxt-link>
+        </li>
+      </ul>
+      <div :class="{ clicked: isActive }" class="btn-menu" @click="activeClass">
+        <span></span>
+      </div>
     </div>
   </header>
 </template>
@@ -97,6 +119,7 @@
 export default {
   data() {
     return {
+      isActive: false,
       listMenu: [
         { link: 'about', text: 'About' },
         { link: 'communities-clubs', text: 'Communities & clubs' },
@@ -122,6 +145,10 @@ export default {
   methods: {
     async onLogout() {
       await this.$auth.logout()
+    },
+    activeClass() {
+      this.isActive = !this.isActive
+      document.querySelector('body').classList.toggle('offScroll')
     },
   },
 }

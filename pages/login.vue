@@ -1,12 +1,16 @@
 <template>
-  <div class="main-wrapper">
+  <main class="main-wrapper auth">
     <div class="login__main-wrapper">
       <div class="form__control">
         <h3>Đăng Nhập</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">
           <label for="">Tài khoản / MSSV:</label>
           <a-form-model-item ref="name" prop="name">
-            <a-input v-model="form.name" placeholder="Nhập tài khoản / MSSV">
+            <a-input
+              v-model="form.name"
+              placeholder="Nhập tài khoản / MSSV"
+              remember
+            >
               <a-icon slot="prefix" type="user" />
             </a-input>
           </a-form-model-item>
@@ -38,8 +42,21 @@
         </a-form-model>
       </div>
     </div>
-    <div class="bg__login"></div>
-  </div>
+    <!-- <div class="logo">
+      <img
+        class="logo__img"
+        src="~/assets/images/logo.svg"
+        alt="Alumni IT Hutech"
+      />
+    </div> -->
+    <div class="bg__login">
+      <img
+        class="bg__login-img"
+        src="~/assets/images/bg_login.svg"
+        alt="Alumni IT Hutech"
+      />
+    </div>
+  </main>
 </template>
 <script>
 export default {
@@ -78,6 +95,7 @@ export default {
             password: this.form.password,
           },
         })
+        window.location.href = '/'
         this.openNotification('success')
       } catch (err) {
         this.openNotification('error')

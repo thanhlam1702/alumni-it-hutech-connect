@@ -1,8 +1,10 @@
 .banner__home{
     width: 100%;
+    height: calc(100vh - 60px);
     position: relative;
-    img{
-        width: 100%;
+    &-img{
+        object-fit: cover;
+        .mid-pos();
     }
     .text__welcome{
         position: absolute;

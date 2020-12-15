@@ -43,7 +43,7 @@
 }
 
 // canh giua tren va duoi
-.pos-middle {
+.mid-pos {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -51,14 +51,14 @@
 }
 
 // canh giua theo truc x
-.pos-x {
+.mid-pos-x {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
 
 // canh giua theo truc y
-.pos-y {
+.mid-pos-y {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -112,21 +112,29 @@
     text-transform: @transform;
 }
 
+
+// 1200px
 // for responsive
 .desktop(@content) {
     @media (max-width: @md-max) {
         @content();
     }
 }
-
+// 992px
 .tablet(@content) {
-    @media screen and (max-width: @sm-max) and (min-height: 500px) {
+    @media screen and (max-width: @sm-max) {
         @content();
     }
 }
-
+// 768px
+.mobile-large(@content) {
+    @media screen and (max-width: @xs-max) {
+        @content();
+    }
+}
+// 568px
 .mobile(@content) {
-    @media screen and (min-width: 320px) and (max-width: @xs-max) {
+    @media screen and (max-width: @xxs-max) {
         @content();
     }
 }

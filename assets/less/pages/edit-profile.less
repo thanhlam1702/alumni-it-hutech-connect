@@ -32,6 +32,8 @@ section{
             .nuxt-link-active{
                 &::before{
                     transform: scaleX(1);
+                    transition: @t @cubic;
+                    transform-origin: center right;
                 }
             }
         }
@@ -48,7 +50,7 @@ section{
             border-radius: 50%;
             img{
                 object-fit: cover;
-                .pos-middle;
+                .mid-pos;
             }
         }
         &-name{

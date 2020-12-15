@@ -5,13 +5,15 @@
         <div class="user__card-info">
           <div class="user__card-avatar">
             <img
-              src="https://scontent-xsp1-1.xx.fbcdn.net/v/t1.0-1/s320x320/84687227_2512620948993884_221115220024623104_n.jpg?_nc_cat=110&ccb=2&_nc_sid=7206a8&_nc_ohc=424qpho3fzsAX-7s-iJ&_nc_ht=scontent-xsp1-1.xx&tp=7&oh=948fd3ecc9916bc72265dcc2ef8bb6c1&oe=5FE153A8"
+              v-if="this.$store.getters.user.avatar !== undefined"
+              :src="user.avatar"
               alt=""
             />
+            <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
           </div>
           <div class="user__card-text">
-            <div class="name">{{ user.name }}</div>
-            <div class="school-year">k17 sernior</div>
+            <div class="name">{{ user.fullName }}</div>
+            <div class="school-year">{{ user.role }}</div>
             <div class="edit-profile">
               <nuxt-link to="/profile/edit"
                 >Chỉnh sửa thông tin<a-icon type="edit"
@@ -49,11 +51,8 @@
 export default {
   data() {
     return {
-      user: {},
+      user: this.$store.getters.user,
     }
-  },
-  beforeMount() {
-    return (this.user = this.$store.getters.user)
   },
 }
 </script>

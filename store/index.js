@@ -9,6 +9,9 @@ const createStore = () => {
       setUser(state, user) {
         state.user = user
       },
+      editUser(state, editUser) {
+        state.user = editUser
+      },
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
@@ -23,6 +26,14 @@ const createStore = () => {
       },
       setUser(vuexContext, user) {
         vuexContext.commit('setUser', user)
+      },
+      editUser(vuexContext, userData) {
+        return this.$axios
+          .$put(process.env.baseApiUrl + `/api/auth/user`, userData)
+          .then(() => {
+            vuexContext.commit('editUser', userData)
+          })
+          .catch(() => {})
       },
     },
     getters: {

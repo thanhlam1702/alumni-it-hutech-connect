@@ -16,6 +16,14 @@ export default {
       },
     ],
   },
+
+  // loading bar
+  loading: { color: '#0c2461' },
+  loadingIndicator: {
+    name: 'circle',
+    color: '#3B8070',
+    background: 'white',
+  },
   // server listen
   server: {
     port: 8000, // default: 3000
