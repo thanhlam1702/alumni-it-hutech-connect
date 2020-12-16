@@ -1,7 +1,11 @@
 <template>
   <footer v-if="!$auth.$state.loggedIn" class="container-fluid">
     <div class="footer__top">
-      <div class="logo"></div>
+      <div class="logo">
+        <nuxt-link to="/"
+          ><img src="~/assets/images/logo.svg" alt="IT alimni association"
+        /></nuxt-link>
+      </div>
       <div class="contact">
         <h3 class="title --line-style">Contact</h3>
         <div class="content">

@@ -117,6 +117,12 @@ export default {
   methods: {
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {})
+      this.openNotification('success')
+    },
+    openNotification(type) {
+      this.$notification[type]({
+        message: 'Đăng nhập thành công',
+      })
     },
   },
 }
