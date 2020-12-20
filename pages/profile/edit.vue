@@ -1,27 +1,53 @@
 <template>
-  <div class="main-profile">
-    <section class="container content-profile">
+  <main class="main-wrapper edit-profile">
+    <section class="container content-profile pd-profile">
       <div class="nav">
         <ul class="nav__options">
           <li class="nav__options-item">
-            <nuxt-link to="/profile/edit">Edit profile</nuxt-link>
+            <nuxt-link to="/profile/edit">Chỉnh sửa trang cá nhân</nuxt-link>
           </li>
           <li class="nav__options-item">
-            <nuxt-link to="/profile/change-password">Change password</nuxt-link>
+            <nuxt-link to="/profile/change-password">Đổi mật khẩu</nuxt-link>
           </li>
         </ul>
       </div>
       <div class="profile">
         <div class="profile__user">
           <div class="profile__user-avatar">
-            <img
-              :src="
-                this.$store.getters.user.avatar !== undefined
-                  ? user.avatar
-                  : '/_nuxt/assets/images/avatart-default.jpg'
-              "
-              alt=""
-            />
+            <div class="img">
+              <img
+                :src="
+                  this.$store.getters.user.avatar !== undefined
+                    ? user.avatar
+                    : '/_nuxt/assets/images/avatart-default.jpg'
+                "
+                alt="Alumni IT Hutech Connect"
+              />
+            </div>
+            <div class="change-avatar" @click="showModal">
+              <i class="icon">
+                <img
+                  src="~/assets/images/icon/camera-black.svg"
+                  alt="Alumni It Hutech Connect"
+                />
+              </i>
+            </div>
+            <a-modal v-model="modelStatus" title="Thay đổi avatar">
+              <a-upload @change="onChange">
+                <a-button> <a-icon type="upload" />Tải ảnh lên </a-button>
+              </a-upload>
+              <template slot="footer">
+                <a-button key="back" @click="handleCancel"> Hủy bỏ </a-button>
+                <a-button
+                  key="submit"
+                  type="primary"
+                  :loading="loadingBtn"
+                  @click="onChangeAvatar"
+                >
+                  Lưu
+                </a-button>
+              </template>
+            </a-modal>
           </div>
           <div class="profile__user-name">
             {{ form.fullName !== null ? form.fullName : form.name }}
@@ -33,13 +59,13 @@
               <div class="title">
                 <label for="">Họ & tên:</label>
               </div>
-              <a-input v-model="form.fullName" value class="info"> </a-input>
+              <a-input v-model="form.fullName" class="info"> </a-input>
             </div>
             <div class="profile__info-item">
               <div class="title">
                 <label for="">Tài khoản:</label>
               </div>
-              <a-input v-model="form.name" class="info" readonly> </a-input>
+              <a-input v-model="form.name" class="info" read-only> </a-input>
             </div>
             <div class="profile__info-item">
               <div class="title">
@@ -51,7 +77,7 @@
               <div class="title">
                 <label for="">Email:</label>
               </div>
-              <a-input v-model="form.email" readonly class="info"> </a-input>
+              <a-input v-model="form.email" read-only class="info"> </a-input>
             </div>
             <div class="profile__info-item">
               <div class="title">
@@ -87,13 +113,27 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <script>
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
+}
 export default {
   data() {
     return {
+      loadingBtn: false,
+      modelStatus: false,
+      seclectedFile: null,
+      previewVisible: false,
+      previewImage: '',
+      fileName: null,
       // user: this.$store.getters.user,
       form: {
         fullName:
@@ -155,23 +195,49 @@ export default {
           message: 'Lưu không thành công',
         })
       }
-
-      // this.$store
-      //   .dispatch('editUser', this.form)
-      //   .then(() => {
-      //     this.$notification.success({
-      //       message: 'Đã lưu',
-      //     })
-      //     this.$router.push('/profile')
-      //   })
-      //   .catch(() => {
-      //     this.$notification.error({
-      //       message: 'Lưu thất bại',
-      //     })
-      //   })
     },
     onCancle() {
       this.$router.push('/profile')
+    },
+    showModal() {
+      this.modelStatus = true
+    },
+    onChange(e) {
+      this.seclectedFile = e.file
+      this.fileName = e.file.name
+      console.log(this.seclectedFile)
+      console.log(this.fileName)
+    },
+    async onChangeAvatar(e) {
+      // await console.log(this.seclectedFile)
+      try {
+        const result = await this.$axios.$put(
+          process.env.baseApiUrl + `/api/auth/user`,
+          this.seclectedFile[0]
+        )
+        if (result.success) {
+          this.loadingBtn = true
+          setTimeout(() => {
+            this.modelStatus = false
+            this.loadingBtn = false
+          }, 2000)
+        }
+      } catch {}
+
+      // this.visible = false
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj)
+      }
+      this.previewImage = file.url || file.preview
+      this.previewVisible = true
+    },
+    handleCancelPreview() {
+      this.previewVisible = false
+    },
+    handleCancel() {
+      this.modelStatus = false
     },
   },
 }

@@ -1,7 +1,7 @@
 <template>
-  <div class="main-wrapper home">
+  <main class="main-wrapper home">
     <BannerHome />
-  </div>
+  </main>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="main-profile">
-    <section class="container user">
+  <main class="main-wrapper profile">
+    <section class="container user pd-profile">
       <div class="user__card">
         <div class="user__card-info">
           <div class="user__card-avatar">
@@ -36,16 +36,22 @@
         </div>
       </div>
     </section>
-    <section class="container content-profile mr-top">
-      <div class="nav">
-        <ul class="nav__options">
-          <li class="nav__options-item">Bài viết</li>
-          <li class="nav__options-item">Đã lưu</li>
-        </ul>
+    <section class="main-profile mr-top pd-profile">
+      <div class="container">
+        <div class="nav">
+          <ul class="nav__options">
+            <li class="nav__options-item">
+              <nuxt-link to="">Bài viết</nuxt-link>
+            </li>
+            <li class="nav__options-item">
+              <nuxt-link to="/profile/save">Đã lưu</nuxt-link>
+            </li>
+          </ul>
+        </div>
+        <div class="profile"></div>
       </div>
-      <div class="profile"></div>
     </section>
-  </div>
+  </main>
 </template>
 <script>
 export default {

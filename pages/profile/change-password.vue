@@ -1,6 +1,6 @@
 <template>
-  <div class="main-profile">
-    <section class="container content-profile">
+  <div class="main-wrapper change-password">
+    <section class="container content-profile pd-profile">
       <div class="nav">
         <ul class="nav__options">
           <li class="nav__options-item">

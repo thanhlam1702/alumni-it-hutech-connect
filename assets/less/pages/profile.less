@@ -3,7 +3,7 @@
     height: @user-card-h;
     .user__card{
         width: 70%;
-        border-radius: 10px;
+        border-radius: @border-radius;
         position: absolute;
         box-shadow: @box-shadow-1;
         background: #fff;
@@ -44,7 +44,7 @@
         width: 100%;
         height: @user-card-h - 40px;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: @border-radius;
         &-img{
             width: 100%;
             height: 100%;
@@ -58,4 +58,41 @@
 }
 .mr-top{
     margin-top: 40px;
+}
+
+.main-profile{
+    .container{
+        background: #fff;
+        border-radius: @border-radius;
+        box-shadow: @box-shadow-1;
+    }
+    .nav{
+        border-radius: @border-radius;
+        box-shadow: @box-shadow-1;
+        &__options{
+            .flex-justify(center);
+            &-item{
+                padding: 20px 0;
+                margin: 0 20px;
+                cursor: pointer;
+                .text(1.8rem, inherit, 2rem, @black-cl, inherit);
+                a{
+                    position: relative;
+                    font-size: 16px;
+                    line-height: 20px;
+                    .hover-button-1(@color-default, 2px);
+                    &::before{
+                        bottom: -6px;
+                    }
+                }
+                .nuxt-link-active{
+                    &::before{
+                        transform: scaleX(1);
+                        transition: @t @cubic;
+                        transform-origin: center right;
+                    }
+                }
+            }
+        }
+    }
 }

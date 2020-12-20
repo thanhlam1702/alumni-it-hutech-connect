@@ -15,28 +15,28 @@
       <div class="nav__right">
         <ul class="nav__right-list">
           <li class="list__item">
-            <nuxt-link to="/"
+            <!-- <nuxt-link to="/"
               ><i class="icon">
                 <img src="~/assets/images/icon/home.svg" alt="" /></i
-            ></nuxt-link>
+            ></nuxt-link> -->
+            <nuxt-link to="/">
+              <IconHome />
+            </nuxt-link>
           </li>
           <li class="list__item">
-            <nuxt-link to="/group"
-              ><i class="icon">
-                <img src="~/assets/images/icon/group.svg" alt="" /></i
-            ></nuxt-link>
+            <nuxt-link to="/group">
+              <IconGroup />
+            </nuxt-link>
           </li>
           <li class="list__item">
-            <nuxt-link to="/message"
-              ><i class="icon">
-                <img src="~/assets/images/icon/message.svg" alt="" /></i
-            ></nuxt-link>
+            <nuxt-link to="/message">
+              <IconMessage />
+            </nuxt-link>
           </li>
           <li class="list__item">
-            <nuxt-link to="/notification"
-              ><i class="icon">
-                <img src="~/assets/images/icon/bell.svg" alt="" /></i
-            ></nuxt-link>
+            <nuxt-link to="/notification">
+              <IconNotification />
+            </nuxt-link>
           </li>
         </ul>
         <div class="nav__right-user">
@@ -116,7 +116,18 @@
 </template>
 
 <script>
+import IconHome from '@/components/icon/IconHome'
+import IconGroup from '@/components/icon/IconGroup'
+import IconMessage from '@/components/icon/IconMessage'
+import IconNotification from '@/components/icon/IconNotification'
+
 export default {
+  components: {
+    IconHome,
+    IconGroup,
+    IconMessage,
+    IconNotification,
+  },
   data() {
     return {
       isActive: false,
