@@ -1,10 +1,112 @@
 //
-.message{
+.message {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: calc(100vh - 80px);
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: calc(100vh - 60px);
     overflow: hidden;
-    &__left{
-        overflow: auto;
+    background: #fff;
+
+    &__right {
+        position: relative;
+        &-top{
+            height: 60px;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            display: flex;
+            align-items: center;
+            .img{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+                position: relative;
+                margin-right: 20px;
+                margin-left: 20px;
+                img{
+                    object-fit: cover;
+                    .mid-pos()
+                }
+            }
+        }
+        &-content{
+            height: 100%;
+        }
+        &-control {
+            height: 60px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            padding-right: 30px;
+            .form-mess {
+                width: 100%;
+                &__box {
+                    height: 44px;
+                    width: 100%;
+                    resize: none;
+                    background: #f0f2f5;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 100px;
+                    &:focus{
+                        outline: none;
+                    }
+
+                }
+            }
+            .icon-send{
+                .icon{
+                    cursor: pointer;
+                    transform: scale(1);
+                    transition: @t @cubic;
+                    &:hover{
+                        transform: scale(1.2);
+                        transition: @t @cubic;
+                    }
+                } 
+            }
+            
+        }
     }
+
+    .chats {
+        height: 100%;
+        overflow: auto;
+
+        li {
+            padding: 0 10px;
+
+        }
+
+        &__item {
+            height: 80px;
+            display: flex;
+            align-items: center;
+
+            &-img {
+                height: 60px;
+                width: 60px;
+                position: relative;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 20px;
+                margin-left: 20px;
+                cursor: pointer;
+
+                img {
+                    object-fit: cover;
+                    .mid-pos();
+                }
+            }
+
+            &.nuxt-link-active {
+                background: #eaf3ff;
+                border-radius: 6px;
+            }
+        }
+
+        .custom-scrollbar-2();
+    }
+
 }
