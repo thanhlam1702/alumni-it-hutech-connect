@@ -1,3 +1,9 @@
+<style>
+.float-right {
+  float: right;
+}
+</style>
+
 <template>
   <main class="main-wrapper message">
     <div class="message__left">
@@ -22,29 +28,46 @@
         </div>
       </div>
       <div class="message__right-content">
+        <ul>
+          <li v-for="(message, index) in messages" :key="index">
+            <span :class="{ 'float-right': message.type === 0 }">{{
+              message.message
+            }}</span>
+          </li>
+        </ul>
         <!-- content chat -->
       </div>
       <div class="message__right-control">
-        <form class="form-mess">
+        <small v-if="typing">User is typing</small>
+        <form class="form-mess" @submit.prevent="send">
           <textarea
             name="mess-box"
             class="form-mess__box"
             placeholder="Ae"
+            v-model="newMessage"
           ></textarea>
+          <button type="submit">submit</button>
         </form>
         <div class="icon-send">
-          <i class="icon">
+          <!-- <i class="icon">
             <img src="~/assets/images/icon/send-mess.svg" alt="" />
-          </i>
+          </i> -->
         </div>
       </div>
     </div>
   </main>
 </template>
 <script>
+import io from 'socket.io-client'
+const socket = io(process.env.baseApiUrl)
 export default {
   data() {
     return {
+      newMessage: null,
+      messages: [],
+      typing: false,
+      ready: false,
+      user: null,
       name: '',
       dataChats: [
         { name: 'Tuan Huynh', id: '123' },
@@ -59,6 +82,40 @@ export default {
         { name: 'Ly Dai Phuc', id: '169' },
       ],
     }
+  },
+  watch: {
+    newMessage(value) {
+      value ? socket.emit('typing') : socket.emit('stopTyping')
+    },
+  },
+  methods: {
+    send() {
+      console.log(typeof this.newMessage)
+      this.messages.push({ message: this.newMessage, type: 0 })
+      socket.emit('chat-message', this.newMessage)
+      this.newMessage = null
+    },
+    addName() {
+      this.ready = true
+      socket.emit('joined')
+    },
+  },
+  created() {
+    socket.emit('Created', 'Tuan')
+    socket.on('Created', (data) => {})
+    socket.on('chat-message', (data) => {
+      this.messages.push({ message: data, type: 1 })
+    })
+    socket.on('typing', (data) => {
+      this.typing = true
+    })
+
+    socket.on('stopTyping', (data) => {
+      this.typing = false
+    })
+    socket.on('joined', (data) => {
+      this.ready = true
+    })
   },
   mounted() {
     this.dataChats.filter((item) =>

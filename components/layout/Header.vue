@@ -46,7 +46,7 @@
                 :size="40"
                 :src="
                   this.$store.getters.user.avatar !== undefined
-                    ? user.avatar
+                    ? this.$store.getters.user.avatar
                     : '/_nuxt/assets/images/avatart-default.jpg'
                 "
               />

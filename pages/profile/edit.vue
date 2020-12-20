@@ -18,7 +18,7 @@
               <img
                 :src="
                   this.$store.getters.user.avatar !== undefined
-                    ? user.avatar
+                    ? this.$store.getters.user.avatar
                     : '/_nuxt/assets/images/avatart-default.jpg'
                 "
                 alt="Alumni IT Hutech Connect"
@@ -33,9 +33,10 @@
               </i>
             </div>
             <a-modal v-model="modelStatus" title="Thay đổi avatar">
-              <a-upload @change="onChange">
+              <!-- <a-upload @change="onChange">
                 <a-button> <a-icon type="upload" />Tải ảnh lên </a-button>
-              </a-upload>
+              </a-upload> -->
+              <input type="file" multiple @change="onChange" />
               <template slot="footer">
                 <a-button key="back" @click="handleCancel"> Hủy bỏ </a-button>
                 <a-button
@@ -134,6 +135,7 @@ export default {
       previewVisible: false,
       previewImage: '',
       fileName: null,
+      image: Array,
       // user: this.$store.getters.user,
       form: {
         fullName:
@@ -203,17 +205,20 @@ export default {
       this.modelStatus = true
     },
     onChange(e) {
-      this.seclectedFile = e.file
-      this.fileName = e.file.name
+      this.seclectedFile = e.target.files[0]
+      this.fileName = e.target.files[0].name
+
       console.log(this.seclectedFile)
       console.log(this.fileName)
     },
     async onChangeAvatar(e) {
       // await console.log(this.seclectedFile)
       try {
+        const data = new FormData()
+        data.append('image', this.seclectedFile)
         const result = await this.$axios.$put(
           process.env.baseApiUrl + `/api/auth/user`,
-          this.seclectedFile[0]
+          data
         )
         if (result.success) {
           this.loadingBtn = true
@@ -239,6 +244,9 @@ export default {
     handleCancel() {
       this.modelStatus = false
     },
+  },
+  mounted() {
+    console.log(this.$store.getters.user)
   },
 }
 </script>
