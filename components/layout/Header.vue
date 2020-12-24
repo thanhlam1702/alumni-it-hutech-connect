@@ -40,39 +40,36 @@
           </li>
         </ul>
         <div class="nav__right-user">
-          <a-dropdown :trigger="['hover', 'click']">
-            <a class="ant-dropdown-link">
-              <a-avatar
-                :size="40"
-                :src="
-                  this.$store.getters.user.avatar !== undefined
-                    ? user.avatar
-                    : '/_nuxt/assets/images/avatart-default.jpg'
-                "
-              />
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <nuxt-link to="/profile"
-                  ><a-icon type="user" class="icon" />Trang cá nhân</nuxt-link
-                >
-              </a-menu-item>
-              <a-menu-item>
-                <nuxt-link to="/save"
-                  ><a-icon type="save" class="icon" />Đã lưu</nuxt-link
-                >
-              </a-menu-item>
-              <a-menu-item>
-                <nuxt-link to="/setting"
-                  ><a-icon type="setting" class="icon" />Cài đặt</nuxt-link
-                >
-              </a-menu-item>
-              <a-menu-divider />
-              <a-menu-item @click="onLogout"
-                ><a-icon type="logout" class="icon" /> Đăng xuất</a-menu-item
+          <div class="img-avatar" @click="activeDropMenu">
+            <img
+              :src="
+                this.$store.getters.user.avatar !== undefined
+                  ? this.$store.getters.user.avatar
+                  : '/_nuxt/assets/images/avatart-default.jpg'
+              "
+              alt="Alumni IT Hutech Connect"
+            />
+          </div>
+          <ul class="dropmenu">
+            <li class="dropmenu__item">
+              <nuxt-link to="/profile"
+                ><a-icon type="user" class="icon" />Trang cá nhân</nuxt-link
               >
-            </a-menu>
-          </a-dropdown>
+            </li>
+            <li class="dropmenu__item">
+              <nuxt-link to="/save"
+                ><a-icon type="save" class="icon" />Đã lưu</nuxt-link
+              >
+            </li>
+            <li class="dropmenu__item">
+              <nuxt-link to="/setting"
+                ><a-icon type="setting" class="icon" />Cài đặt</nuxt-link
+              >
+            </li>
+            <li class="dropmenu__item" @click="onLogout">
+              <a><a-icon type="logout" class="icon" />Đăng xuất</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -152,6 +149,13 @@ export default {
       }
       prevScroll = currentScroll
     }
+
+    // Menu dropmenu when click outsite and remove active class
+    const dropmenu = document.querySelector('.dropmenu')
+    document.addEventListener('click', (e) => {
+      e.preventDefault()
+      dropmenu.classList.remove('active')
+    })
   },
   methods: {
     async onLogout() {
@@ -160,6 +164,11 @@ export default {
     activeClass() {
       this.isActive = !this.isActive
       document.querySelector('body').classList.toggle('offScroll')
+    },
+    activeDropMenu() {
+      event.stopPropagation()
+      const dropmenu = document.querySelector('.dropmenu')
+      dropmenu.classList.toggle('active')
     },
   },
 }

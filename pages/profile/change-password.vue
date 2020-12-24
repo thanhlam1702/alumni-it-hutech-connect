@@ -1,16 +1,7 @@
 <template>
   <div class="main-wrapper change-password">
     <section class="container content-profile pd-profile">
-      <div class="nav">
-        <ul class="nav__options">
-          <li class="nav__options-item">
-            <nuxt-link to="/profile/edit">Edit profile</nuxt-link>
-          </li>
-          <li class="nav__options-item">
-            <nuxt-link to="/profile/change-password">Change password</nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <NavOption />
       <div class="profile">
         <div class="profile__info">
           <a-form-model ref="ruleForm" :model="form" :rules="rules">
@@ -62,7 +53,11 @@
 </template>
 
 <script>
+import NavOption from '@/components/profile/NavOption'
 export default {
+  components: {
+    NavOption,
+  },
   data() {
     // Kiểm tra khi nhập mật khảu phải lớn hơn 6 ký tự và gồm có chữ và số
     const validatePass = (rule, value, callback) => {

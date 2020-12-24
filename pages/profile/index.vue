@@ -6,7 +6,7 @@
           <div class="user__card-avatar">
             <img
               v-if="this.$store.getters.user.avatar !== undefined"
-              :src="user.avatar"
+              :src="this.$store.getters.user.avatar"
               alt=""
             />
             <img v-else src="~/assets/images/avatart-default.jpg" alt="" />

@@ -29,7 +29,12 @@
             <nuxt-link to="/forgot-password" class="login-form-forgot"
               >Quên mật khẩu
             </nuxt-link>
-            <a-button type="primary" style="width: 100%" @click="onSubmit">
+            <a-button
+              type="primary"
+              style="width: 100%"
+              :loading="isLoading"
+              @click="onSubmit"
+            >
               Đăng nhập
             </a-button>
             <div class="or__register">
@@ -69,6 +74,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       form: {
         name: null,
         password: null,
@@ -87,16 +93,20 @@ export default {
   },
   methods: {
     async onSubmit() {
+      this.isLoading = true
       this.$refs.ruleForm.validate((valid) => {})
       try {
-        await this.$auth.loginWith('local', {
+        const result = await this.$auth.loginWith('local', {
           data: {
             name: this.form.name,
             password: this.form.password,
           },
         })
-        window.location.href = '/'
-        this.openNotification('success')
+        if (result.data.success) {
+          this.isLoading = false
+          this.openNotification('success')
+          window.location.href = '/'
+        }
       } catch (err) {
         this.openNotification('error')
       }

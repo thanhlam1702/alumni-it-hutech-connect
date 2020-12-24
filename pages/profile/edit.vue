@@ -1,16 +1,7 @@
 <template>
   <main class="main-wrapper edit-profile">
     <section class="container content-profile pd-profile">
-      <div class="nav">
-        <ul class="nav__options">
-          <li class="nav__options-item">
-            <nuxt-link to="/profile/edit">Chỉnh sửa trang cá nhân</nuxt-link>
-          </li>
-          <li class="nav__options-item">
-            <nuxt-link to="/profile/change-password">Đổi mật khẩu</nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <NavOption />
       <div class="profile">
         <div class="profile__user">
           <div class="profile__user-avatar">
@@ -18,7 +9,7 @@
               <img
                 :src="
                   this.$store.getters.user.avatar !== undefined
-                    ? user.avatar
+                    ? this.$store.getters.user.avatar
                     : '/_nuxt/assets/images/avatart-default.jpg'
                 "
                 alt="Alumni IT Hutech Connect"
@@ -33,9 +24,9 @@
               </i>
             </div>
             <a-modal v-model="modelStatus" title="Thay đổi avatar">
-              <a-upload @change="onChange">
+              <a-upload-dragger accept=".jpg, .jpeg, .png" @change="onChange">
                 <a-button> <a-icon type="upload" />Tải ảnh lên </a-button>
-              </a-upload>
+              </a-upload-dragger>
               <template slot="footer">
                 <a-button key="back" @click="handleCancel"> Hủy bỏ </a-button>
                 <a-button
@@ -117,24 +108,17 @@
 </template>
 
 <script>
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })
-}
+import NavOption from '@/components/profile/NavOption'
 export default {
+  components: {
+    NavOption,
+  },
   data() {
     return {
       loadingBtn: false,
       modelStatus: false,
       seclectedFile: null,
-      previewVisible: false,
-      previewImage: '',
       fileName: null,
-      // user: this.$store.getters.user,
       form: {
         fullName:
           this.$store.getters.user.fullName === undefined
@@ -172,6 +156,10 @@ export default {
           this.$store.getters.user.background === undefined
             ? null
             : this.$store.getters.user.background,
+        avatar:
+          this.$store.getters.user.avatar === undefined
+            ? null
+            : this.$store.getters.user.avatar,
       },
     }
   },
@@ -203,38 +191,28 @@ export default {
       this.modelStatus = true
     },
     onChange(e) {
-      this.seclectedFile = e.file
-      this.fileName = e.file.name
-      console.log(this.seclectedFile)
-      console.log(this.fileName)
+      if (e.file.status === 'done') {
+        this.seclectedFile = e.file.originFileObj
+        this.fileName = e.file.originFileObj.name
+      }
     },
     async onChangeAvatar(e) {
-      // await console.log(this.seclectedFile)
+      const formData = new FormData()
+      formData.append('image', this.seclectedFile, this.fileName)
       try {
+        this.loadingBtn = true
         const result = await this.$axios.$put(
           process.env.baseApiUrl + `/api/auth/user`,
-          this.seclectedFile[0]
+          formData
         )
         if (result.success) {
-          this.loadingBtn = true
-          setTimeout(() => {
-            this.modelStatus = false
-            this.loadingBtn = false
-          }, 2000)
+          this.modelStatus = false
+          this.loadingBtn = false
+          console.log(result)
         }
-      } catch {}
-
-      // this.visible = false
-    },
-    async handlePreview(file) {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj)
+      } catch {
+        this.loadingBtn = false
       }
-      this.previewImage = file.url || file.preview
-      this.previewVisible = true
-    },
-    handleCancelPreview() {
-      this.previewVisible = false
     },
     handleCancel() {
       this.modelStatus = false
