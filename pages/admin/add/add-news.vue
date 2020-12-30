@@ -10,8 +10,8 @@
             <a-menu-item key="3">Career & Professional</a-menu-item>
             <a-menu-item key="3">Learning</a-menu-item>
           </a-menu>
-          <a-button style="margin-left: 8px">
-            <h3>Categories</h3>
+          <a-button style="padding-bottom: 10px">
+            <h3>SELECT CATEGORIES</h3>
             <a-icon type="down" />
           </a-button>
         </a-dropdown>

@@ -24,9 +24,7 @@
         <div class="search__bar">
           <a-input-search placeholder="Search Events.." style="width: 50%" />
           <a-button type="primary" icon="plus">
-            <nuxt-link to="/admin/events-management/add-event"
-              >Add Event</nuxt-link
-            >
+            <nuxt-link to="/admin/add/add-event">Add Event</nuxt-link>
           </a-button>
         </div>
 
