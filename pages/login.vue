@@ -109,6 +109,7 @@ export default {
         }
       } catch (err) {
         this.openNotification('error')
+        this.isLoading = false
       }
     },
     openNotification(type) {

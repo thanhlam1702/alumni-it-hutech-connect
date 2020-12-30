@@ -1,18 +1,20 @@
 <template>
   <main class="main-wrapper message">
-    <div class="message__left">
-      <ul class="chats">
-        <li v-for="(item, index) in dataChats" :key="index">
-          <nuxt-link class="chats__item" :to="'/message/' + item.id">
-            <div class="chats__item-img">
-              <img src="~/assets/images/avatart-default.jpg" alt="" />
-            </div>
-            <div class="chats__item-name">{{ item.name }}</div>
-          </nuxt-link>
-        </li>
-      </ul>
+    <div class="container">
+      <div class="message__left">
+        <ul class="chats">
+          <li v-for="(item, index) in dataChats" :key="index">
+            <nuxt-link class="chats__item" :to="'/message/' + item.id">
+              <div class="chats__item-img">
+                <img src="~/assets/images/avatart-default.jpg" alt="" />
+              </div>
+              <div class="chats__item-name">{{ item.name }}</div>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+      <div class="messsage__right"></div>
     </div>
-    <div class="messaga__right"></div>
   </main>
 </template>
 <script>

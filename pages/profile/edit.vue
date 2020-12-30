@@ -208,7 +208,6 @@ export default {
         if (result.success) {
           this.modelStatus = false
           this.loadingBtn = false
-          console.log(result)
         }
       } catch {
         this.loadingBtn = false

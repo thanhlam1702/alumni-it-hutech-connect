@@ -1,41 +1,45 @@
 <template>
-  <main class="main-wrapper message">
-    <div class="message__left">
-      <ul class="chats">
-        <li v-for="(item, index) in dataChats" :key="index">
-          <nuxt-link class="chats__item" :to="'/message/' + item.id">
-            <div class="chats__item-img">
+  <main class="main-wrapper message-page">
+    <div class="container">
+      <div class="message">
+        <div class="message__left">
+          <ul class="chats">
+            <li v-for="(item, index) in dataChats" :key="index">
+              <nuxt-link class="chats__item" :to="'/message/' + item.id">
+                <div class="chats__item-img">
+                  <img src="~/assets/images/avatart-default.jpg" alt="" />
+                </div>
+                <div class="chats__item-name">{{ item.name }}</div>
+              </nuxt-link>
+            </li>
+          </ul>
+        </div>
+        <div class="message__right">
+          <div class="message__right-top">
+            <div class="img">
               <img src="~/assets/images/avatart-default.jpg" alt="" />
             </div>
-            <div class="chats__item-name">{{ item.name }}</div>
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
-    <div class="message__right">
-      <div class="message__right-top">
-        <div class="img">
-          <img src="~/assets/images/avatart-default.jpg" alt="" />
-        </div>
-        <div>
-          {{ name }}
-        </div>
-      </div>
-      <div class="message__right-content">
-        <!-- content chat -->
-      </div>
-      <div class="message__right-control">
-        <form class="form-mess">
-          <textarea
-            name="mess-box"
-            class="form-mess__box"
-            placeholder="Ae"
-          ></textarea>
-        </form>
-        <div class="icon-send">
-          <i class="icon">
-            <img src="~/assets/images/icon/send-mess.svg" alt="" />
-          </i>
+            <div>
+              {{ name }}
+            </div>
+          </div>
+          <div class="message__right-content">
+            <!-- content chat -->
+          </div>
+          <div class="message__right-control">
+            <form class="form-mess">
+              <textarea
+                name="mess-box"
+                class="form-mess__box"
+                placeholder="Ae"
+              ></textarea>
+            </form>
+            <div class="icon-send">
+              <i class="icon">
+                <img src="~/assets/images/icon/send-mess.svg" alt="" />
+              </i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +68,6 @@ export default {
     this.dataChats.filter((item) =>
       item.id === this.$route.params.id ? (this.name = item.name) : null
     )
-    console.log(this.name)
   },
 }
 </script>

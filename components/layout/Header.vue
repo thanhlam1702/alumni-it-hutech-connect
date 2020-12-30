@@ -10,15 +10,12 @@
         <a-input-search
           placeholder="Tìm kiếm trên IT Hutech Connect"
           style="width: 100%"
+          @search="onSearch"
         />
       </div>
       <div class="nav__right">
         <ul class="nav__right-list">
           <li class="list__item">
-            <!-- <nuxt-link to="/"
-              ><i class="icon">
-                <img src="~/assets/images/icon/home.svg" alt="" /></i
-            ></nuxt-link> -->
             <nuxt-link to="/">
               <IconHome />
             </nuxt-link>
@@ -57,7 +54,7 @@
               >
             </li>
             <li class="dropmenu__item">
-              <nuxt-link to="/save"
+              <nuxt-link to="/profile/save"
                 ><a-icon type="save" class="icon" />Đã lưu</nuxt-link
               >
             </li>
@@ -169,6 +166,10 @@ export default {
       event.stopPropagation()
       const dropmenu = document.querySelector('.dropmenu')
       dropmenu.classList.toggle('active')
+    },
+    onSearch(value) {
+      console.log(value)
+      console.log(this.$route)
     },
   },
 }

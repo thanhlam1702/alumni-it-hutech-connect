@@ -98,14 +98,26 @@ header{
             border-radius: 4px;
             box-shadow: @shadow-1;
             padding: 10px;
+            right: 0;
             position: absolute;
             transition: @t @cubic;
             transform: translateY(10px);
             .hidden();
             &__item{
+                margin-bottom: 10px;
                 a{
-                    color: #000;
+                    color: @color-default;
+                    position: relative;
+                    .hover-button-1(@color-default, 2px);
+                    &::before{
+                        bottom: -4px;
+                    }
                 }
+            }
+            .icon{
+                width: 16px;
+                height: 16px;
+                margin-right: 10px;
             }
             &.active{
                 transition: @t @cubic;
@@ -229,12 +241,6 @@ header{
                 }
             }
         }
-    }
-}
-
-.ant-dropdown-menu-item{
-    .icon{
-        margin-right: 8px;
     }
 }
 

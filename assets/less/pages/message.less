@@ -1,11 +1,14 @@
 //
+.main-wrapper.message-page{
+    .flex-align(center);
+}
 .message {
     display: grid;
     grid-template-columns: 360px 1fr;
-    grid-template-rows: calc(100vh - 60px);
+    grid-template-rows: calc(100vh - 80px);
     overflow: hidden;
     background: #fff;
-
+    border-radius: 6px;
     &__right {
         position: relative;
         &-top{
@@ -29,7 +32,7 @@
             }
         }
         &-content{
-            height: calc(100% - 60px);
+            height: calc(100% - 80px);
         }
         &-control {
             height: 60px;
@@ -69,7 +72,9 @@
             
         }
     }
-
+    .message__left{
+        padding-top: 10px;
+    }
     .chats {
         height: 100%;
         overflow: auto;

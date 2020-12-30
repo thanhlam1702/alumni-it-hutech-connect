@@ -34,7 +34,13 @@ export default {
   css: ['@/assets/less/all.less'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['@/plugins/antd-ui'],
+  plugins: [
+    '@/plugins/antd-ui',
+    {
+      src: '~/plugins/VueFlickity.js',
+      ssr: false,
+    },
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
