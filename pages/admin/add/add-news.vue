@@ -4,7 +4,7 @@
       <div class="add__form-control">
         <h2>ADD NEWS</h2>
         <a-dropdown>
-          <a-menu slot="overlay" @click="handleMenuClick">
+          <a-menu slot="overlay">
             <a-menu-item key="1">Association news</a-menu-item>
             <a-menu-item key="2">Awards and Honors</a-menu-item>
             <a-menu-item key="3">Career & Professional</a-menu-item>
@@ -23,10 +23,8 @@
         <a-textarea placeholder="more information..." :rows="10" />
         <div class="clearfix" style="margin-top: 10px">
           <a-upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            :multiple="true"
             list-type="picture-card"
-            :file-list="fileList"
-            @preview="handlePreview"
             @change="handleChange"
           >
             <div>
@@ -34,13 +32,6 @@
               <div class="ant-upload-text">Upload images</div>
             </div>
           </a-upload>
-          <a-modal
-            :visible="previewVisible"
-            :footer="null"
-            @cancel="handleCancel"
-          >
-            <img alt="example" style="width: 100%" :src="previewImage" />
-          </a-modal>
         </div>
         <a-button type="primary" style="width: 100%" @click="onSubmit">
           Create News
@@ -61,7 +52,12 @@ function getBase64(file) {
 export default {
   layout: 'auth',
   data() {
-    return { title: 'Add Group', previewVisible: false, previewImage: '' }
+    return {
+      title: 'Add Group',
+      previewVisible: false,
+      previewImage: '',
+      listImg: [],
+    }
   },
 
   methods: {
@@ -75,8 +71,17 @@ export default {
       this.previewImage = file.url || file.preview
       this.previewVisible = true
     },
-    handleChange({ fileList }) {
-      this.fileList = fileList
+    handleChange(e) {
+      if (e.file.status === 'done') {
+        // console.log(e.file.originFileObj)
+        e.fileList.forEach((item, index) => {
+          this.listImg[index] = item.originFileObj
+        })
+      }
+      // console.log(e.fileList)
+    },
+    onSubmit() {
+      console.log(this.listImg)
     },
   },
 }
