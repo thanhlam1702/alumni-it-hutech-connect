@@ -50,7 +50,7 @@ function getBase64(file) {
   })
 }
 export default {
-  layout: 'auth',
+  layout: 'admin',
   data() {
     return {
       title: 'Add Group',

@@ -192,7 +192,7 @@ const data = [
 ]
 
 export default {
-  layout: 'auth',
+  layout: 'admin',
   data() {
     return {
       data,

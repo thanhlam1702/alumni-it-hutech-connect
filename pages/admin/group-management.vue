@@ -79,7 +79,7 @@ const columns = [
   },
 ]
 export default {
-  layout: 'auth',
+  layout: 'admin',
   data() {
     return {
       columns,

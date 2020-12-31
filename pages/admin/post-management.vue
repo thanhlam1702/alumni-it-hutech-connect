@@ -23,11 +23,7 @@
       <div class="post__management">
         <div class="post__management-infor">
           <template>
-            <a-table
-              :columns="columns"
-              :data-source="data"
-              :scroll="{ x: 500, y: 500 }"
-            >
+            <a-table :columns="columns" :scroll="{ x: 500, y: 500 }">
               <a slot="name" slot-scope="text">{{ text }}</a>
               <a slot="action" slot-scope="" href="javascript:;">Delete</a>
             </a-table>
@@ -71,7 +67,7 @@ const columns = [
   },
 ]
 export default {
-  layout: 'auth',
+  layout: 'admin',
   data() {
     return {
       columns,
