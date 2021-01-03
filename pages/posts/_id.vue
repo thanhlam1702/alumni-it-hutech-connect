@@ -2,7 +2,7 @@
   <main class="main-wrapper detail-post">
     <div class="container">
       <div class="post-detail-contain">
-        <div class="post-left">
+        <div v-if="post.image.length !== 0" class="post-left">
           <Flickity ref="flickity" class="imgs" :options="flickityOptions">
             <div
               v-for="(item, index) in post.image"
@@ -120,13 +120,12 @@ export default {
         )
         if (review.success) {
           this.comment = review.reviews
-          console.log(this.comment)
           setTimeout(function () {
             review.reviews.forEach((item, index) => {
               document.getElementsByClassName('body')[index].innerHTML =
                 item.body
             })
-          }, 1000)
+          }, 500)
         }
       } catch (error) {}
     },

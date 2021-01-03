@@ -24,6 +24,17 @@ const createStore = () => {
             context.error(e)
           })
       },
+      getUser(vuexContext) {
+        return this.$axios
+          .$get(process.env.baseApiUrl + '/api/auth/user')
+          .then((data) => {
+            vuexContext.commit('setUser', data.user)
+          })
+          .catch((e) => {
+            // eslint-disable-next-line no-console
+            console.log(e)
+          })
+      },
       setUser(vuexContext, user) {
         vuexContext.commit('setUser', user)
       },

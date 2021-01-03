@@ -11,6 +11,7 @@
         style="width: 100%"
         type="primary"
         :loading="loading"
+        :disabled="isDisable"
         @click="submit"
       >
         Đăng
@@ -18,7 +19,11 @@
     </template>
     <div class="content">
       <div class="placeholder">Ae</div>
-      <div class="content__text" contenteditable="true"></div>
+      <div
+        class="content__text"
+        contenteditable="true"
+        @input="changeText"
+      ></div>
       <a-upload
         list-type="picture-card"
         class="img-upload"
@@ -45,6 +50,7 @@ export default {
     return {
       visible: false,
       loading: false,
+      isDisable: true,
       listImg: [],
     }
   },
@@ -54,6 +60,17 @@ export default {
     },
   },
   methods: {
+    changeText(e) {
+      if (e.target.innerHTML !== '' || this.listImg.length !== 0) {
+        document.querySelector('.content .placeholder').classList.add('hidden')
+        this.isDisable = false
+      } else {
+        document
+          .querySelector('.content .placeholder')
+          .classList.remove('hidden')
+        this.isDisable = true
+      }
+    },
     handleCancel(e) {
       this.$emit('handdleCancelModal')
     },
@@ -62,6 +79,7 @@ export default {
 
       const formData = new FormData()
       const content = document.querySelector('.content__text').innerHTML
+
       formData.append('content', content)
       this.listImg.forEach((item) => {
         formData.append('image', item)
@@ -72,8 +90,9 @@ export default {
           process.env.baseApiUrl + `/decks`,
           formData
         )
-        console.log(result)
-        if (result.success === 'true') {
+        if (result.success === true) {
+          document.querySelector('.content__text').innerHTML = ''
+          this.listImg = []
           this.$emit('handdleCancelModal')
           this.$emit('fetchData')
         }
@@ -85,6 +104,19 @@ export default {
         e.fileList.forEach((item, index) => {
           this.listImg[index] = item.originFileObj
         })
+      }
+      if (e.file.status === 'removed') {
+        this.listImg = this.listImg.filter(
+          (img) => img.uid !== e.file.originFileObj.uid
+        )
+      }
+      if (
+        this.listImg.length !== 0 ||
+        document.querySelector('.content__text').innerHTML !== ''
+      ) {
+        this.isDisable = false
+      } else {
+        this.isDisable = true
       }
     },
   },

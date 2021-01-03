@@ -1,15 +1,15 @@
 // detail post pages less
 .main-wrapper.detail-post{
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 .post-detail-contain{
-    display: grid;
-    grid-template-columns: 600px 1fr;
-    grid-template-rows: auto;
+    display: flex;
+    width: 100%;
     background: #fff;
 }
 .post-left{
+    max-width: 600px;
     border-right: 1px solid @cl-border;
     .flex-align(center);
     .imgs{
@@ -45,6 +45,7 @@
 }
 .post-right{
     height: 620px;
+    width: 100%;
     position: relative;
     &__owner{
         padding: 10px;

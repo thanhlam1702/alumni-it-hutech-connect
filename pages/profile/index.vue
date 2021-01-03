@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="user__card-connect">
-            <div class="post">Bài viết: 1</div>
+            <div class="post">Bài viết: {{ posts.length }}</div>
             <div class="follower">Theo dõi: 0</div>
             <div class="following">Đang theo dõi: 0</div>
           </div>
@@ -59,34 +59,41 @@
           </ul>
         </div>
         <div class="posts">
-          <nuxt-link
-            v-for="item in posts"
-            :key="item._id"
-            class="posts__item"
-            :to="`/posts/${item._id}`"
-          >
-            <div
-              v-if="
-                item.image == '' ||
-                item.image == null ||
-                item.image == undefined
-              "
-              class="description"
-            >
-              <span>{{ item.content }}</span>
-            </div>
-            <no-ssr v-else>
-              <Flickity ref="flickity" class="slide" :options="flickityOptions">
-                <div
-                  v-for="(img, index) in item.image"
-                  :key="index"
-                  class="posts__item-img"
+          <div v-for="item in posts" :key="item._id" class="posts__item">
+            <nuxt-link class="posts__item-slide" :to="`/posts/${item._id}`">
+              <div
+                v-if="
+                  item.image == '' ||
+                  item.image == null ||
+                  item.image == undefined
+                "
+                class="description"
+              >
+                <span>{{ item.content }}</span>
+              </div>
+              <no-ssr v-else>
+                <Flickity
+                  ref="flickity"
+                  class="slide"
+                  :options="flickityOptions"
                 >
-                  <img :src="img" alt="" />
-                </div>
-              </Flickity>
-            </no-ssr>
-          </nuxt-link>
+                  <div
+                    v-for="(img, index) in item.image"
+                    :key="index"
+                    class="slide__img"
+                  >
+                    <img :src="img" alt="" />
+                  </div>
+                </Flickity>
+              </no-ssr>
+            </nuxt-link>
+            <div
+              class="posts__item-delete"
+              @click="showDeleteConfirm(item._id)"
+            >
+              <a-icon type="delete" style="font-size: 30px; color: #fff" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -103,7 +110,7 @@ export default {
       .$get(process.env.baseApiUrl + '/api/auth/user/decks')
       .then((data) => {
         return {
-          posts: data.decks,
+          posts: data.decks.reverse(),
         }
       })
       .catch((e) => {})
@@ -113,6 +120,7 @@ export default {
       modalPost: false,
       user: this.$store.getters.user,
       posts: null,
+      isLoadingDelete: false,
       flickityOptions: {
         initialIndex: 0,
         prevNextButtons: false,
@@ -123,19 +131,38 @@ export default {
       },
     }
   },
+
   methods: {
     handdleCancelModal() {
       this.modalPost = false
     },
     async fectData() {
-      return await this.$axios
-        .$get(process.env.baseApiUrl + '/api/auth/user/decks')
-        .then((data) => {
-          return {
-            posts: data.decks,
-          }
-        })
-        .catch((e) => {})
+      const result = await this.$axios.$get(
+        process.env.baseApiUrl + '/api/auth/user/decks'
+      )
+      this.posts = result.decks.reverse()
+    },
+    showDeleteConfirm(id) {
+      const thisHandle = this
+      this.$confirm({
+        title: 'Bạn có chắc chắn muốn xóa bài viết này?',
+        okText: 'Xóa',
+        okType: 'danger',
+        cancelText: 'Hủy',
+        onOk() {
+          thisHandle.onDelete(id)
+        },
+      })
+    },
+    async onDelete(id) {
+      const result = await this.$axios.$delete(
+        process.env.baseApiUrl + `/decks/${id}`
+      )
+      if (result.success === true) {
+        this.fectData()
+        this.visibleDelete = false
+        this.isLoadingDelete = false
+      }
     },
   },
 }

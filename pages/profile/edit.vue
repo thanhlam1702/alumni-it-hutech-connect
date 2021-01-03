@@ -206,12 +206,16 @@ export default {
           formData
         )
         if (result.success) {
+          this.fetAvatar()
           this.modelStatus = false
           this.loadingBtn = false
         }
       } catch {
         this.loadingBtn = false
       }
+    },
+    fetAvatar() {
+      this.$store.dispatch('getUser')
     },
     handleCancel() {
       this.modelStatus = false
