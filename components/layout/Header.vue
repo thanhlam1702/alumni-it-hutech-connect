@@ -126,10 +126,10 @@ export default {
     return {
       isActive: false,
       listMenu: [
-        { link: 'about', text: 'About' },
-        { link: 'communities-clubs', text: 'Communities & clubs' },
-        { link: 'events', text: 'Events' },
-        { link: 'news', text: 'News' },
+        { link: 'public/about', text: 'About' },
+        { link: 'public/communities-clubs', text: 'Communities & clubs' },
+        { link: 'public/events', text: 'Events' },
+        { link: 'public/news', text: 'News' },
       ],
     }
   },
