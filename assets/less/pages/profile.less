@@ -16,8 +16,8 @@
             display: flex;
         }
         &-avatar{
-            height: 120px;
-            width: 120px;
+            height: 140px;
+            width: 140px;
             overflow: hidden;
             border-radius: 50%;
             position: relative;
@@ -89,7 +89,7 @@
                         bottom: -6px;
                     }
                 }
-                .nuxt-link-active{
+                .nuxt-link-exact-active{
                     &::before{
                         transform: scaleX(1);
                         transition: @t @cubic;
@@ -130,6 +130,7 @@
                     height: 100%;
                     width: 100%;
                     padding: 20px;
+                    overflow: hidden;
                 }
             }
             &-delete{

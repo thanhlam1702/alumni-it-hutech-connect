@@ -46,20 +46,12 @@
               <nuxt-link to="/profile">Bài viết</nuxt-link>
             </li>
             <li class="nav__options-item">
-              <nuxt-link to="/profile/save">Đã lưu</nuxt-link>
-            </li>
-            <li class="nav__options-item" @click="modalPost = true">
-              <a><a-icon type="plus" /></a>
-              <PostModal
-                :isvisible="modalPost"
-                @handdleCancelModal="handdleCancelModal"
-                @fetchData="fectData"
-              />
+              <nuxt-link to="save">Đã lưu</nuxt-link>
             </li>
           </ul>
         </div>
         <div class="posts">
-          <div v-for="item in posts" :key="item._id" class="posts__item">
+          <div v-for="item in postsShare" :key="item._id" class="posts__item">
             <nuxt-link class="posts__item-slide" :to="`/posts/${item._id}`">
               <div
                 v-if="
@@ -68,6 +60,7 @@
                   item.image == undefined
                 "
                 class="description"
+                @load="fillContent"
               >
                 <span>{{ item.content }}</span>
               </div>
@@ -100,11 +93,7 @@
   </main>
 </template>
 <script>
-import PostModal from '@/components/modal/PostModal'
 export default {
-  components: {
-    PostModal,
-  },
   asyncData(context) {
     return context.app.$axios
       .$get(process.env.baseApiUrl + '/api/auth/user/decks')
@@ -117,9 +106,8 @@ export default {
   },
   data() {
     return {
-      modalPost: false,
       user: this.$store.getters.user,
-      posts: null,
+      postsShare: this.$store.getters.user.deckShare,
       isLoadingDelete: false,
       flickityOptions: {
         initialIndex: 0,
@@ -132,39 +120,38 @@ export default {
       },
     }
   },
-
   methods: {
-    handdleCancelModal() {
-      this.modalPost = false
+    fillContent(e) {
+      console.log(e)
     },
-    async fectData() {
-      const result = await this.$axios.$get(
-        process.env.baseApiUrl + '/api/auth/user/decks'
-      )
-      this.posts = result.decks.reverse()
-    },
-    showDeleteConfirm(id) {
-      const thisHandle = this
-      this.$confirm({
-        title: 'Bạn có chắc chắn muốn xóa bài viết này?',
-        okText: 'Xóa',
-        okType: 'danger',
-        cancelText: 'Hủy',
-        onOk() {
-          thisHandle.onDelete(id)
-        },
-      })
-    },
-    async onDelete(id) {
-      const result = await this.$axios.$delete(
-        process.env.baseApiUrl + `/decks/${id}`
-      )
-      if (result.success === true) {
-        this.fectData()
-        this.visibleDelete = false
-        this.isLoadingDelete = false
-      }
-    },
+    // async fectData() {
+    //   const result = await this.$axios.$get(
+    //     process.env.baseApiUrl + '/api/auth/user/decks'
+    //   )
+    //   this.posts = result.decks.reverse()
+    // },
+    // showDeleteConfirm(id) {
+    //   const thisHandle = this
+    //   this.$confirm({
+    //     title: 'Bạn có chắc chắn muốn xóa bài viết này?',
+    //     okText: 'Xóa',
+    //     okType: 'danger',
+    //     cancelText: 'Hủy',
+    //     onOk() {
+    //       thisHandle.onDelete(id)
+    //     },
+    //   })
+    // },
+    // async onDelete(id) {
+    //   const result = await this.$axios.$delete(
+    //     process.env.baseApiUrl + `/decks/${id}`
+    //   )
+    //   if (result.success === true) {
+    //     this.fectData()
+    //     this.visibleDelete = false
+    //     this.isLoadingDelete = false
+    //   }
+    // },
   },
   head() {
     return {

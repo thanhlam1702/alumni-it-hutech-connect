@@ -16,7 +16,7 @@
       <div class="nav__right">
         <ul class="nav__right-list">
           <li class="list__item">
-            <nuxt-link to="/">
+            <nuxt-link to="/main">
               <IconHome />
             </nuxt-link>
           </li>
@@ -134,18 +134,18 @@ export default {
     }
   },
   mounted() {
-    let prevScroll = window.pageYOffset
-    window.onscroll = function () {
-      const header = document.getElementsByTagName('header')[0]
+    // let prevScroll = window.pageYOffset
+    // window.onscroll = function () {
+    //   const header = document.getElementsByTagName('header')[0]
 
-      const currentScroll = window.pageYOffset
-      if (prevScroll > currentScroll) {
-        header.style.top = '0'
-      } else {
-        header.style.top = '-80px'
-      }
-      prevScroll = currentScroll
-    }
+    //   const currentScroll = window.pageYOffset
+    //   if (prevScroll > currentScroll) {
+    //     header.style.top = '0'
+    //   } else {
+    //     header.style.top = '-80px'
+    //   }
+    //   prevScroll = currentScroll
+    // }
 
     // Menu dropmenu when click outsite and remove active class
     const dropmenu = document.querySelector('.dropmenu')
@@ -168,8 +168,8 @@ export default {
       dropmenu.classList.toggle('active')
     },
     onSearch(value) {
-      console.log(value)
-      console.log(this.$route)
+      // console.log(value)
+      // console.log(this.$route)
     },
   },
 }

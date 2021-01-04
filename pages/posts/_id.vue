@@ -1,3 +1,4 @@
+div
 <template>
   <main class="main-wrapper detail-post">
     <div class="container">
@@ -50,7 +51,13 @@
             </div>
           </div>
           <div class="post-right__enter">
-            <div class="content" contenteditable="true"></div>
+            <div class="placeholder">Thêm bình luận..</div>
+            <div
+              class="content"
+              contenteditable="true"
+              @input="enterText"
+              @keydown="keyup"
+            ></div>
             <i class="btn-send icon" @click="submit">
               <img src="~/assets/images/icon/send-mess.svg" alt="" />
             </i>
@@ -86,6 +93,7 @@ export default {
         wrapAround: true,
         autoPlay: 4000,
         contain: true,
+        lazyLoad: 2,
       },
     }
   },
@@ -128,6 +136,27 @@ export default {
           }, 500)
         }
       } catch (error) {}
+    },
+    keyup(e) {
+      if (e.keyCode === 13) {
+        this.submit()
+      }
+    },
+    enterText(e) {
+      if (e.target.innerHTML !== '') {
+        document
+          .querySelector('.post-right__enter .placeholder')
+          .classList.add('hidden')
+        document.querySelector('.btn-send').classList.add('notActive')
+      } else {
+        document
+          .querySelector('.post-right__enter .placeholder')
+          .classList.remove('hidden')
+        document
+          .querySelector('.post-right__enter .placeholder')
+          .classList.add('hidden')
+        document.querySelector('.btn-send').classList.remove('notActive')
+      }
     },
   },
 }
