@@ -3,7 +3,7 @@
     <div class="container">
       <div class="logo">
         <nuxt-link to="/"
-          ><img src="~/assets/images/logo.svg" alt="IT alimni association"
+          ><img src="~/assets/images/logo.svg" alt="IT alumni association"
         /></nuxt-link>
       </div>
       <div class="search__bar">
