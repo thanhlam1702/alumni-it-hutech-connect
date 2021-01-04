@@ -45,6 +45,6 @@ export default {
     // eslint-disable-next-line no-undef
     // HeaderPublic,
   },
-  layout: 'public',
+  layout: 'default',
 }
 </script>
