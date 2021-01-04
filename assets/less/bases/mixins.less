@@ -94,6 +94,23 @@
     }
 }
 
+.hover-name{
+    &::after{
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: #000;
+        transition: @t @cubic; 
+        .hidden();
+    }
+    &:hover::after{
+        transition: @t @cubic; 
+        .visible();
+    }
+}
 .hidden {
     opacity: 0;
     visibility: hidden;

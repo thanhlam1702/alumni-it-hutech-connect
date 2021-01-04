@@ -20,7 +20,11 @@ div
               <img :src="post.owner.avatar" alt="" />
             </div>
             <div class="name">
-              <span>{{ post.owner.fullName }}</span>
+              <span>
+                <nuxt-link :to="'/user/' + post.owner._id">
+                  {{ post.owner.fullName }}
+                </nuxt-link>
+              </span>
               <span class="date">{{ post.date }}</span>
             </div>
           </div>
@@ -39,11 +43,13 @@ div
                 </div>
                 <div class="comment__body">
                   <div class="name-user">
-                    {{
-                      item.user.fullName == null
-                        ? item.user.name
-                        : item.user.fullName
-                    }}
+                    <nuxt-link :to="'/user/' + item.user._id">
+                      {{
+                        item.user.fullName == null
+                          ? item.user.name
+                          : item.user.fullName
+                      }}
+                    </nuxt-link>
                   </div>
                   <div class="body"></div>
                 </div>
