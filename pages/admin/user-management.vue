@@ -192,12 +192,39 @@ const data = [
 ]
 
 export default {
+  async asyncData({ $axios }) {
+    try {
+      const response = await $axios.$get('http://localhost:3000/admin/users')
+      return {
+        users: response.users,
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err)
+    }
+  },
   layout: 'admin',
   data() {
     return {
       data,
       columns,
     }
+  },
+  methods: {
+    async onDeleteUser(userID) {
+      try {
+        const response = await this.$axios.$delete(
+          `http://localhost:3000/admin/${userID}`
+        )
+
+        if (response.success) {
+          this.message = response.message
+        }
+      } catch (err) {
+        this.message = err.message
+        console.log(err)
+      }
+    },
   },
   // beforeMount() {
   //   return (this.user = this.$store.getters.user)

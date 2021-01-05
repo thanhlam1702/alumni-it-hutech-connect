@@ -68,10 +68,37 @@ const columns = [
 ]
 export default {
   layout: 'admin',
+  async asyncData({ $axios }) {
+    try {
+      const response = await $axios.$get('http://localhost:3000/decks')
+
+      return {
+        decks: response.decks,
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
   data() {
     return {
       columns,
     }
+  },
+  methods: {
+    async onDeleteUser(deckID) {
+      try {
+        const response = await this.$axios.$delete(
+          `http://localhost:3000/admin/${deckID}`
+        )
+
+        if (response.success) {
+          this.message = response.message
+        }
+      } catch (err) {
+        this.message = err.message
+        console.log(err)
+      }
+    },
   },
 }
 </script>

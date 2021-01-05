@@ -86,6 +86,19 @@ export default {
         },
         logout: true,
       },
+      admin: {
+        endpoints: {
+          // eslint-disable-next-line prettier/prettier
+          login: { url: 'http://localhost:3000/admin/login', method: 'post', propertyName: 'token' },
+          logout: {
+            url: 'http://localhost:3000/admin/logout',
+            method: 'post',
+          },
+          // eslint-disable-next-line prettier/prettier
+          propertyName: "token",
+        },
+        logout: true,
+      },
     },
   },
 }
