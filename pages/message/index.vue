@@ -1,19 +1,21 @@
 <template>
-  <main class="main-wrapper message">
+  <main class="main-wrapper message-page">
     <div class="container">
-      <div class="message__left">
-        <ul class="chats">
-          <li v-for="(item, index) in dataChats" :key="index">
-            <nuxt-link class="chats__item" :to="'/message/' + item.id">
-              <div class="chats__item-img">
-                <img src="~/assets/images/avatart-default.jpg" alt="" />
-              </div>
-              <div class="chats__item-name">{{ item.name }}</div>
-            </nuxt-link>
-          </li>
-        </ul>
+      <div class="message">
+        <div class="message__left">
+          <ul class="chats">
+            <li v-for="(item, index) in dataChats" :key="index">
+              <nuxt-link class="chats__item" :to="'/message/' + item.id">
+                <div class="chats__item-img">
+                  <img src="~/assets/images/avatart-default.jpg" alt="" />
+                </div>
+                <div class="chats__item-name">{{ item.name }}</div>
+              </nuxt-link>
+            </li>
+          </ul>
+        </div>
+        <div class="message__right"></div>
       </div>
-      <div class="messsage__right"></div>
     </div>
   </main>
 </template>
@@ -21,6 +23,7 @@
 export default {
   data() {
     return {
+      name: '',
       dataChats: [
         { name: 'Tuan Huynh', id: '123' },
         { name: 'Van A', id: '124' },
@@ -34,6 +37,11 @@ export default {
         { name: 'Ly Dai Phuc', id: '169' },
       ],
     }
+  },
+  mounted() {
+    this.dataChats.filter((item) =>
+      item.id === this.$route.params.id ? (this.name = item.name) : null
+    )
   },
 }
 </script>

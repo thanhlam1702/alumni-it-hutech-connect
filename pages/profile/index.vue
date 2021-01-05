@@ -30,10 +30,7 @@
         </div>
         <div class="user__bg">
           <div class="user__bg-img">
-            <img
-              src="https://scontent.fhan5-6.fna.fbcdn.net/v/t1.0-9/p960x960/90349064_2552378661684779_2995561576666234880_o.jpg?_nc_cat=107&ccb=2&_nc_sid=e3f864&_nc_ohc=Yhq-7lqNoZQAX8eGlcN&_nc_ht=scontent.fhan5-6.fna&tp=6&oh=eb75606501b3ab6c131be6aab010950b&oe=5FF3905A"
-              alt=""
-            />
+            <img src="~/assets/images/bg-user-default.jpg" alt="" />
           </div>
         </div>
       </div>
@@ -69,7 +66,7 @@
                 "
                 class="description"
               >
-                <span>{{ item.content }}</span>
+                <span v-html="item.content"></span>
               </div>
               <client-only v-else>
                 <Flickity

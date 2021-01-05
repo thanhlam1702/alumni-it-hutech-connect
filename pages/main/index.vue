@@ -20,7 +20,7 @@
               <span></span>
             </div>
           </div>
-          <div class="posts__item-content"></div>
+          <div class="posts__item-content" v-html="item.content"></div>
           <client-only v-if="item.image.length !== 0">
             <Flickity ref="flickity" class="slide" :options="flickityOptions">
               <div
@@ -94,12 +94,6 @@ export default {
           _this.closeModal()
         })
     },
-  },
-  mounted() {
-    this.posts.forEach((item, index) => {
-      document.querySelectorAll('.posts__item-content')[index].innerHTML =
-        item.content
-    })
   },
   methods: {
     scrollTop() {

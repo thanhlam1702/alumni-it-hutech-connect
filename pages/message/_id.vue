@@ -26,7 +26,20 @@
           <div class="message__right-content">
             <!-- content chat -->
           </div>
-          <div class="message__right-control">
+          <div class="message__right-enter">
+            <div class="placeholder">Ae</div>
+            <div
+              class="content"
+              contenteditable="true"
+              @input="enterText"
+            ></div>
+            <div class="icon-send">
+              <i class="icon">
+                <img src="~/assets/images/icon/send-mess.svg" alt="" />
+              </i>
+            </div>
+          </div>
+          <!-- <div class="message__right-control">
             <form class="form-mess">
               <textarea
                 name="mess-box"
@@ -39,7 +52,7 @@
                 <img src="~/assets/images/icon/send-mess.svg" alt="" />
               </i>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -68,6 +81,21 @@ export default {
     this.dataChats.filter((item) =>
       item.id === this.$route.params.id ? (this.name = item.name) : null
     )
+  },
+  methods: {
+    enterText(e) {
+      if (e.target.innerHTML !== '') {
+        document
+          .querySelector('.message__right-enter .placeholder')
+          .classList.add('hidden')
+        document.querySelector('.icon-send').classList.add('notActive')
+      } else {
+        document
+          .querySelector('.message__right-enter .placeholder')
+          .classList.remove('hidden')
+        document.querySelector('.icon-send').classList.remove('notActive')
+      }
+    },
   },
 }
 </script>
