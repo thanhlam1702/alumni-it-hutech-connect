@@ -12,11 +12,33 @@
               <div class="name">{{ user.fullName }}</div>
               <div class="school-year">{{ user.role }}</div>
             </div>
+            <div class="user__card-control">
+              <div class="btn-sendmess">Nhắn tin</div>
+              <div
+                v-if="
+                  user.followers.findIndex(
+                    (item) => item._id === this.$store.state.user._id
+                  ) === -1
+                "
+                class="btn-follow"
+                @click="onFollow"
+              >
+                Theo dõi
+              </div>
+              <div v-else class="btn-follow" @click="onFollow">
+                <a-icon type="user" />
+                <a-icon type="check" :style="{ fontSize: '10px' }" />
+              </div>
+            </div>
           </div>
           <div class="user__card-connect">
             <div class="post">Bài viết: {{ user.decks.length }}</div>
-            <div class="follower">Theo dõi: 0</div>
-            <div class="following">Đang theo dõi: 0</div>
+            <div class="follower">
+              {{ user.followers.length }} người theo dõi
+            </div>
+            <div class="following">
+              Đang theo dõi: {{ user.following.length }}
+            </div>
           </div>
         </div>
         <div class="user__bg">
@@ -49,7 +71,7 @@
                 "
                 class="description"
               >
-                <span>{{ item.content }}</span>
+                <span v-html="item.content"></span>
               </div>
               <client-only v-else>
                 <Flickity
@@ -100,6 +122,27 @@ export default {
         // lazyLoad: 2,
       },
     }
+  },
+  methods: {
+    async fetchUser() {
+      try {
+        const result = await this.$axios.$get(
+          process.env.baseApiUrl + '/api/auth/' + this.$route.params.id
+        )
+        this.user = result.user
+      } catch (error) {}
+    },
+    async onFollow() {
+      try {
+        const result = await this.$axios.$post(
+          process.env.baseApiUrl + `/api/auth/${this.$route.params.id}`
+        )
+        if (result.success) {
+          this.fetchUser()
+          this.$store.dispatch('getUser')
+        }
+      } catch (error) {}
+    },
   },
   head() {
     return {

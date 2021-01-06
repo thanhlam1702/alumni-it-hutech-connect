@@ -1,43 +1,6 @@
 <template>
   <main class="main-wrapper profile">
-    <section class="user pd-profile">
-      <div class="container">
-        <div class="user__card">
-          <div class="user__card-info">
-            <div class="user__card-avatar">
-              <img
-                v-if="this.$store.getters.user.avatar !== undefined"
-                :src="this.$store.getters.user.avatar"
-                alt=""
-              />
-              <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
-            </div>
-            <div class="user__card-text">
-              <div class="name">{{ user.fullName }}</div>
-              <div class="school-year">{{ user.role }}</div>
-              <div class="edit-profile">
-                <nuxt-link to="/profile/edit"
-                  >Chỉnh sửa thông tin<a-icon type="edit"
-                /></nuxt-link>
-              </div>
-            </div>
-          </div>
-          <div class="user__card-connect">
-            <div class="post">Bài viết: {{ posts.length }}</div>
-            <div class="follower">Theo dõi: 0</div>
-            <div class="following">Đang theo dõi: 0</div>
-          </div>
-        </div>
-        <div class="user__bg">
-          <div class="user__bg-img">
-            <img
-              src="https://scontent.fhan5-6.fna.fbcdn.net/v/t1.0-9/p960x960/90349064_2552378661684779_2995561576666234880_o.jpg?_nc_cat=107&ccb=2&_nc_sid=e3f864&_nc_ohc=Yhq-7lqNoZQAX8eGlcN&_nc_ht=scontent.fhan5-6.fna&tp=6&oh=eb75606501b3ab6c131be6aab010950b&oe=5FF3905A"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+    <CardUser :user="user" :posts="posts" />
     <section class="main-profile mr-top pd-profile">
       <div class="container">
         <div class="nav">
@@ -93,7 +56,11 @@
   </main>
 </template>
 <script>
+import CardUser from '@/components/profile/CardUser'
 export default {
+  components: {
+    CardUser,
+  },
   asyncData(context) {
     return context.app.$axios
       .$get(process.env.baseApiUrl + '/api/auth/user/decks')

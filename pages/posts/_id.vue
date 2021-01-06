@@ -1,4 +1,3 @@
-div
 <template>
   <main class="main-wrapper detail-post">
     <div class="container">

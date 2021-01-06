@@ -1,40 +1,6 @@
 <template>
   <main class="main-wrapper profile">
-    <section class="user pd-profile">
-      <div class="container">
-        <div class="user__card">
-          <div class="user__card-info">
-            <div class="user__card-avatar">
-              <img
-                v-if="this.$store.getters.user.avatar !== undefined"
-                :src="this.$store.getters.user.avatar"
-                alt=""
-              />
-              <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
-            </div>
-            <div class="user__card-text">
-              <div class="name">{{ user.fullName }}</div>
-              <div class="school-year">{{ user.role }}</div>
-              <div class="edit-profile">
-                <nuxt-link to="/profile/edit"
-                  >Chỉnh sửa thông tin<a-icon type="edit"
-                /></nuxt-link>
-              </div>
-            </div>
-          </div>
-          <div class="user__card-connect">
-            <div class="post">Bài viết: {{ posts.length }}</div>
-            <div class="follower">Theo dõi: 0</div>
-            <div class="following">Đang theo dõi: 0</div>
-          </div>
-        </div>
-        <div class="user__bg">
-          <div class="user__bg-img">
-            <img src="~/assets/images/bg-user-default.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
+    <CardUser :user="user" :posts="posts" />
     <section class="main-profile mr-top pd-profile">
       <div class="container">
         <div class="nav">
@@ -98,9 +64,11 @@
 </template>
 <script>
 import PostModal from '@/components/modal/PostModal'
+import CardUser from '@/components/profile/CardUser'
 export default {
   components: {
     PostModal,
+    CardUser,
   },
   asyncData(context) {
     return context.app.$axios
@@ -129,7 +97,6 @@ export default {
       },
     }
   },
-
   methods: {
     handdleCancelModal() {
       this.modalPost = false

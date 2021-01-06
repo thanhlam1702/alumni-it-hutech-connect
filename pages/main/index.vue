@@ -2,7 +2,7 @@
   <div class="main-wrapper main">
     <div class="container">
       <div class="posts">
-        <div v-for="item in posts" :key="item._id" class="posts__item">
+        <div v-for="(item, ipost) in posts" :key="item._id" class="posts__item">
           <div class="posts__item-user">
             <div class="avatar">
               <img :src="item.owner.avatar" alt="" />
@@ -28,11 +28,32 @@
                 :key="index"
                 class="slide__item"
               >
-                <img :src="img" alt="" />
+                <div class="slide__item-img">
+                  <img :src="img" alt="" />
+                </div>
               </div>
             </Flickity>
           </client-only>
-          <div class="posts__item-control"></div>
+          <div v-if="item.like.length !== 0" class="posts__item-count">
+            {{ item.like.length }} lượt thích
+          </div>
+          <div class="posts__item-control">
+            <div
+              v-if="item.like.indexOf(_self.$store.state.user._id) === -1"
+              class="like"
+              @click="onLike(item._id, ipost)"
+            >
+              <a-icon type="like" />
+              Thích
+            </div>
+            <div v-else class="like is-like" @click="onLike(item._id, ipost)">
+              <a-icon type="like" theme="filled" />
+              Thích
+            </div>
+            <div class="comment">
+              <nuxt-link :to="'/posts/' + item._id">Bình luận</nuxt-link>
+            </div>
+          </div>
         </div>
       </div>
       <div class="back-top" @click="scrollTop">
@@ -57,7 +78,6 @@ export default {
   data() {
     return {
       posts: null,
-      posttest: null,
       idPost: null,
       flagModal: false,
       flickityOptions: {
@@ -66,8 +86,9 @@ export default {
         pageDots: false,
         wrapAround: true,
         autoPlay: 4000,
-        contain: true,
+        // contain: true,
         lazyLoad: 2,
+        // setGallerySize: false,
       },
     }
   },
@@ -96,6 +117,24 @@ export default {
     },
   },
   methods: {
+    async fetchLike(id, pos) {
+      try {
+        const result = await this.$axios.$get(
+          process.env.baseApiUrl + '/decks/' + id
+        )
+        this.posts[pos].like = result.deck.like
+      } catch (error) {}
+    },
+    async onLike(id, pos) {
+      try {
+        const result = await this.$axios.$post(
+          process.env.baseApiUrl + '/decks/' + id
+        )
+        if (result.success) {
+          this.fetchLike(id, pos)
+        }
+      } catch (error) {}
+    },
     scrollTop() {
       window.scrollTo(0, 0)
     },

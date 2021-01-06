@@ -31,13 +31,34 @@
             flex: 1;
             .name{
                 font-weight: 600;
-                .text(2.5rem, inherit, 3rem, @text-black, inherit);
+                .text(2.5rem, inherit, revert, @text-black, inherit);
+                .dot-para-text(1);
             }
             .school-year{
                 font-size: 1.6rem;
             }
             div{
                 padding: 10px 0;
+            }
+        }
+        &-control{
+            padding-top: 14px;
+            display: flex;
+            .btn-follow , .btn-sendmess{
+                cursor: pointer;
+                padding: 6px 20px;
+                border-radius: 6px;
+                background: @color-default;
+                color: @text-white;
+                font-size: 16px;
+                line-height: 18px;
+                height: max-content;
+            }
+            .btn-sendmess{
+                border: 1px solid @cl-border-1;
+                color: @text-black;
+                background: none;
+                margin-right: 10px;
             }
         }
         &-connect{
@@ -91,9 +112,9 @@
                 }
                 .nuxt-link-exact-active{
                     &::before{
-                        transform: scaleX(1);
                         transition: @t @cubic;
-                        transform-origin: center right;
+                        width: 100%;
+                        left: 0;
                     }
                 }
             }
