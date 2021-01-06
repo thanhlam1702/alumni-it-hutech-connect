@@ -6,12 +6,16 @@
 
         <h3 for="">Event</h3>
         <div class="components-input-demo-size">
-          <a-input placeholder="event name..." style="width: 100%" />
+          <a-input
+            v-model="title"
+            placeholder="event name..."
+            style="width: 100%"
+          />
         </div>
         <h3>Description</h3>
         <a-textarea placeholder="more information..." :rows="5" />
         <h3>Select date of the events</h3>
-        <a-range-picker>
+        <a-range-picker v-model="d">
           <template slot="dateRender" slot-scope="current">
             <div class="ant-calendar-date" :style="getCurrentStyle(current)">
               {{ current.date() }}
@@ -29,7 +33,10 @@
 export default {
   layout: 'admin',
   data() {
-    return { title: 'Add Group' }
+    return {
+      title: 'Add Group',
+      d: '',
+    }
   },
   methods: {
     getCurrentStyle(current, today) {
@@ -39,6 +46,18 @@ export default {
         style.borderRadius = '50%'
       }
       return style
+    },
+    async onSubmit() {
+      const data = new FormData()
+      data.append('title', this.title)
+      data.append('description', this.d)
+
+      const result = await this.$axios.$post(
+        'http://localhost:3000/admin/news',
+        data
+      )
+      console.log(result)
+      this.$router.push('/admin/news')
     },
   },
 }
