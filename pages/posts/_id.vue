@@ -100,6 +100,8 @@ export default {
         autoPlay: 4000,
         contain: true,
         lazyLoad: 2,
+        selectedAttraction: 0.01,
+        friction: 0.15,
       },
     }
   },

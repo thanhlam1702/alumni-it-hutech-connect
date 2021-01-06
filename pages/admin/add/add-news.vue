@@ -53,7 +53,7 @@ export default {
   layout: 'admin',
   data() {
     return {
-      title: 'Add Group',
+      title: 'Add news',
       previewVisible: false,
       previewImage: '',
       listImg: [],
