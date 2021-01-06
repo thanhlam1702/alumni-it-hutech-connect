@@ -1,3 +1,8 @@
+<style>
+.float-right {
+  float: right;
+}
+</style>
 <template>
   <main class="main-wrapper message-page">
     <div class="container">
@@ -24,18 +29,27 @@
             </div>
           </div>
           <div class="message__right-content">
+            <ul>
+              <li v-for="(message, index) in messages" :key="index">
+                <span :class="{ 'float-right': message.type === 0 }">{{
+                  message.message
+                }}</span>
+                <br />
+              </li>
+            </ul>
             <!-- content chat -->
           </div>
           <div class="message__right-control">
+            <small v-if="typing">User is typing</small>
             <form class="form-mess">
               <textarea
+                v-model="newMessage"
                 name="mess-box"
                 class="form-mess__box"
-                placeholder="Ae"
               ></textarea>
             </form>
             <div class="icon-send">
-              <i class="icon">
+              <i class="icon" @click="send">
                 <img src="~/assets/images/icon/send-mess.svg" alt="" />
               </i>
             </div>
@@ -46,9 +60,15 @@
   </main>
 </template>
 <script>
+import io from 'socket.io-client'
+const socket = io(process.env.baseApiUrl)
 export default {
   data() {
     return {
+      newMessage: null,
+      messages: [],
+      typing: false,
+      ready: false,
       name: '',
       dataChats: [
         { name: 'Tuan Huynh', id: '123' },
@@ -64,10 +84,45 @@ export default {
       ],
     }
   },
+  watch: {
+    newMessage(value) {
+      value ? socket.emit('typing') : socket.emit('stopTyping')
+    },
+  },
+  methods: {
+    send() {
+      this.messages.push({ message: this.newMessage, type: 0 })
+      socket.emit('chat-message', this.newMessage)
+      this.newMessage = null
+    },
+    addName() {
+      this.ready = true
+      socket.emit('joined')
+    },
+  },
   mounted() {
     this.dataChats.filter((item) =>
       item.id === this.$route.params.id ? (this.name = item.name) : null
     )
+  },
+  created() {
+    socket.emit('Created', {
+      user: `$auth.$state.user.email`,
+    })
+    socket.on('Created', (data) => {})
+    socket.on('chat-message', (data) => {
+      this.messages.push({ message: data, type: 1 })
+    })
+    socket.on('typing', (data) => {
+      this.typing = true
+    })
+
+    socket.on('stopTyping', (data) => {
+      this.typing = false
+    })
+    socket.on('joined', (data) => {
+      this.ready = true
+    })
   },
 }
 </script>
