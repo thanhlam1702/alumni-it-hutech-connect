@@ -41,6 +41,24 @@
         transform-origin: center left;
     }
 }
+.hover-button-3(@bg, @height) {
+    &::before {
+        content: '';
+        width: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: @height;
+        background: @bg;
+        transition: @t @cubic;
+    }
+
+    &:hover::before {
+        transition: @t @cubic;
+        width: 100%;
+        left: 0;;
+    }
+}
 
 // canh giua tren va duoi
 .mid-pos {

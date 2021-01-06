@@ -9,12 +9,13 @@
     overflow: hidden;
     background: #fff;
     border-radius: 6px;
+    border: 1px solid @cl-border-1;
     &__right {
         position: relative;
         &-top{
             height: 60px;
             width: 100%;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid @cl-border-1;
             display: flex;
             align-items: center;
             .img{
@@ -34,61 +35,96 @@
         &-content{
             height: calc(100% - 80px);
         }
-        &-control {
-            height: 60px;
-            width: 100%;
+        &-enter{
             position: absolute;
             bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
             display: flex;
-            align-items: center;
-            padding-right: 30px;
-            .form-mess {
+            align-items: flex-end;
+            .placeholder{
+                position: absolute;
+                padding: 10px 20px;
+                &.hidden{
+                    display: none;
+                }
+            }
+            .content{
                 width: 100%;
-                &__box {
-                    height: 44px;
-                    width: 100%;
-                    resize: none;
-                    background: #f0f2f5;
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 100px;
-                    &:focus{
-                        outline: none;
-                    }
-
+                min-height: 40px;
+                padding: 10px 20px;
+                padding-right: 50px;
+                max-height: 120px;
+                overflow: auto;
+                background: #f0f2f5;
+                border-radius: 30px;
+                .custom-scrollbar-2();
+                &:focus{
+                    outline: none;
                 }
             }
             .icon-send{
-                .icon{
-                    cursor: pointer;
-                    transform: scale(1);
-                    transition: @t @cubic;
-                    &:hover{
-                        transform: scale(1.2);
-                        transition: @t @cubic;
-                    }
-                } 
+                margin-left: 10px;
+                cursor: pointer;
+                pointer-events: none;
+                &.notActive{
+                    pointer-events: visible;
+                }
             }
-            
         }
+        // &-control {
+        //     height: 60px;
+        //     width: 100%;
+        //     position: absolute;
+        //     bottom: 0;
+        //     display: flex;
+        //     align-items: center;
+        //     padding-right: 30px;
+        //     .form-mess {
+        //         width: 100%;
+        //         &__box {
+        //             height: 44px;
+        //             width: 100%;
+        //             resize: none;
+        //             background: #f0f2f5;
+        //             padding: 10px 20px;
+        //             border: none;
+        //             border-radius: 100px;
+        //             &:focus{
+        //                 outline: none;
+        //             }
+
+        //         }
+        //     }
+        //     .icon-send{
+        //         .icon{
+        //             cursor: pointer;
+        //             transform: scale(1);
+        //             transition: @t @cubic;
+        //             &:hover{
+        //                 transform: scale(1.2);
+        //                 transition: @t @cubic;
+        //             }
+        //         } 
+        //     }
+        // }
     }
     .message__left{
-        padding-top: 10px;
+        border-right: 1px solid @cl-border-1;
     }
     .chats {
         height: 100%;
         overflow: auto;
-
-        li {
-            padding: 0 10px;
-
-        }
-
         &__item {
             height: 80px;
             display: flex;
             align-items: center;
-
+            transition: @t @cubic;
+            &:hover{
+                background: #efefef;
+                transition: @t @cubic;
+            }
             &-img {
                 height: 60px;
                 width: 60px;
@@ -98,20 +134,15 @@
                 margin-right: 20px;
                 margin-left: 20px;
                 cursor: pointer;
-
                 img {
                     object-fit: cover;
                     .mid-pos();
                 }
             }
-
             &.nuxt-link-active {
-                background: #eaf3ff;
-                border-radius: 6px;
+                background: #efefef;
             }
         }
-
         .custom-scrollbar-2();
     }
-
 }

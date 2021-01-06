@@ -40,7 +40,7 @@
           <div class="img-avatar" @click="activeDropMenu">
             <img
               :src="
-                this.$store.getters.user.avatar !== undefined
+                this.$store.getters.user.avatar
                   ? this.$store.getters.user.avatar
                   : '/_nuxt/assets/images/avatart-default.jpg'
               "
