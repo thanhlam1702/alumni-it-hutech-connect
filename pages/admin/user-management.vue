@@ -195,6 +195,7 @@ export default {
   async asyncData({ $axios }) {
     try {
       const response = await $axios.$get('http://localhost:3000/admin/users')
+      console.log(response.users)
       return {
         users: response.users,
       }

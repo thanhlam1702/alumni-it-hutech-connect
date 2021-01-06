@@ -79,6 +79,18 @@ const columns = [
   },
 ]
 export default {
+  async asyncData({ $axios }) {
+    try {
+      const response = await $axios.$get('http://localhost:3000/groups/')
+      console.log(response)
+      return {
+        groups: response.groups,
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err)
+    }
+  },
   layout: 'admin',
   data() {
     return {

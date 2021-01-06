@@ -74,6 +74,18 @@ const columns = [
   },
 ]
 export default {
+  async asyncData({ $axios }) {
+    try {
+      const response = await $axios.$get('http://localhost:3000/admin/event')
+      console.log(response)
+      return {
+        events: response.events,
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err)
+    }
+  },
   layout: 'admin',
   data() {
     return {

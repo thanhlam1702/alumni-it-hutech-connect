@@ -13,9 +13,13 @@
           />
         </div>
         <h3>Description</h3>
-        <a-textarea placeholder="more information..." :rows="5" />
+        <a-textarea
+          v-model="description"
+          placeholder="more information..."
+          :rows="5"
+        />
         <h3>Select date of the events</h3>
-        <a-range-picker v-model="d">
+        <a-range-picker>
           <template slot="dateRender" slot-scope="current">
             <div class="ant-calendar-date" :style="getCurrentStyle(current)">
               {{ current.date() }}
@@ -34,8 +38,10 @@ export default {
   layout: 'admin',
   data() {
     return {
-      title: 'Add Group',
-      d: '',
+      title: '',
+      description: '',
+      start: '',
+      end: '',
     }
   },
   methods: {
@@ -50,10 +56,10 @@ export default {
     async onSubmit() {
       const data = new FormData()
       data.append('title', this.title)
-      data.append('description', this.d)
+      data.append('description', this.description)
 
       const result = await this.$axios.$post(
-        'http://localhost:3000/admin/news',
+        'http://localhost:3000/admin/event',
         data
       )
       console.log(result)
