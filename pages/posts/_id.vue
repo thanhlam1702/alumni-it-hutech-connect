@@ -29,7 +29,11 @@ div
             </div>
           </div>
           <div class="contain">
-            <div id="content" class="post-right__content"></div>
+            <div
+              id="content"
+              class="post-right__content"
+              v-html="post.content"
+            ></div>
             <div class="post-right__comment">
               <div
                 v-for="(item, index) in comment"
@@ -51,7 +55,7 @@ div
                       }}
                     </nuxt-link>
                   </div>
-                  <div class="body"></div>
+                  <div class="body" v-html="item.body"></div>
                 </div>
               </div>
             </div>
@@ -62,7 +66,6 @@ div
               class="content"
               contenteditable="true"
               @input="enterText"
-              @keydown="keyup"
             ></div>
             <i class="btn-send icon" @click="submit">
               <img src="~/assets/images/icon/send-mess.svg" alt="" />
@@ -105,13 +108,6 @@ export default {
       },
     }
   },
-  mounted() {
-    document.getElementById('content').innerHTML = this.post.content
-    this.comment.forEach((item, index) => {
-      document.querySelectorAll('.comment__body .body')[index].innerHTML =
-        item.body
-    })
-  },
   methods: {
     async submit() {
       const comment = document.querySelector('.post-right__enter .content')
@@ -136,19 +132,8 @@ export default {
         )
         if (review.success) {
           this.comment = review.reviews
-          setTimeout(function () {
-            review.reviews.forEach((item, index) => {
-              document.getElementsByClassName('body')[index].innerHTML =
-                item.body
-            })
-          }, 500)
         }
       } catch (error) {}
-    },
-    keyup(e) {
-      if (e.keyCode === 13) {
-        this.submit()
-      }
     },
     enterText(e) {
       if (e.target.innerHTML !== '') {
@@ -160,9 +145,6 @@ export default {
         document
           .querySelector('.post-right__enter .placeholder')
           .classList.remove('hidden')
-        document
-          .querySelector('.post-right__enter .placeholder')
-          .classList.add('hidden')
         document.querySelector('.btn-send').classList.remove('notActive')
       }
     },

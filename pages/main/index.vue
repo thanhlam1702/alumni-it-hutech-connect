@@ -8,11 +8,7 @@
               <img :src="item.owner.avatar" alt="" />
             </div>
             <div class="name">
-              <nuxt-link :to="'/user/' + item.owner._id">
-                {{
-                  item.owner.fullName ? item.owner.fullName : item.owner.name
-                }}
-              </nuxt-link>
+              {{ item.owner.fullName ? item.owner.fullName : item.owner.name }}
             </div>
             <div class="control" @click="openModal(item._id)">
               <span></span>
