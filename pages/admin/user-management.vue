@@ -1,5 +1,6 @@
 <template>
   <main class="admin">
+    <p @click="onFetch">heloo</p>
     <section class="management-content">
       <div class="nav">
         <ul class="nav__options">
@@ -23,35 +24,16 @@
       <div class="user__management">
         <div class="user__management-infor">
           <a-table
+            v-if="data"
             :columns="columns"
-            :data="tableData"
+            :data="data"
             :scroll="{ x: 500, y: 500 }"
           >
             <a slot="name" slot-scope="text">{{ text }}</a>
             <span slot="customTitle">Username </span>
-            <span slot="role" slot-scope="roles">
-              <a-tag
-                v-for="role in roles"
-                :key="role"
-                :color="
-                  role === 'loser'
-                    ? 'volcano'
-                    : role.length > 5
-                    ? 'geekblue'
-                    : 'green'
-                "
-              >
-                {{ role.toUpperCase() }}
-              </a-tag>
-            </span>
-            <span slot="action" slot-scope="text, record">
-              <a>Invite 一 {{ record.name }}</a>
-              <a-divider type="vertical" />
+            <span slot="role"> </span>
+            <span slot="action">
               <a>Delete</a>
-              <a-divider type="vertical" />
-              <a class="ant-dropdown-link">
-                More actions <a-icon type="down" />
-              </a>
             </span>
           </a-table>
         </div>
@@ -62,45 +44,42 @@
 <script>
 const columns = [
   {
-    dataIndex: 'name',
-    key: 'name',
-    slots: { title: 'customTitle' },
-    scopedSlots: { customRender: 'name' },
+    title: 'Id',
+    key: '_id',
   },
   {
     title: 'Email',
-    dataIndex: 'age',
-    key: 'age',
+    key: 'email',
   },
   {
     title: 'Password',
-    dataIndex: 'address',
-    key: 'address',
+    key: 'password',
   },
   {
-    title: 'role',
-    key: 'roles',
-    dataIndex: 'roles',
-    scopedSlots: { customRender: 'role' },
+    title: 'Role',
+    key: 'role',
   },
   {
     title: 'Action',
     key: 'action',
-    scopedSlots: { customRender: 'action' },
   },
 ]
 
 export default {
   layout: 'admin',
+  data() {
+    return {
+      columns,
+    }
+  },
 
-  data: () => ({
-    tableData: undefined,
-    columns,
-  }),
-  mounted() {
-    this.$axios.get('http://localhost:3000/api/auth').then(({ data }) => {
-      this.tableData = data
-    })
+  methods: {
+    async onFetch() {
+      const result = await this.$axios.$get(
+        process.env.baseApiUrl + '/admin/users'
+      )
+      console.log(result)
+    },
   },
 }
 </script>
