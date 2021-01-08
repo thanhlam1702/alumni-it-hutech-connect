@@ -1,6 +1,5 @@
 <template>
   <main class="admin">
-    <p @click="onFetch">heloo</p>
     <section class="management-content">
       <div class="nav">
         <ul class="nav__options">
@@ -24,16 +23,15 @@
       <div class="user__management">
         <div class="user__management-infor">
           <a-table
-            v-if="data"
             :columns="columns"
-            :data="data"
+            :data-source="user"
             :scroll="{ x: 500, y: 500 }"
           >
             <a slot="name" slot-scope="text">{{ text }}</a>
             <span slot="customTitle">Username </span>
             <span slot="role"> </span>
-            <span slot="action">
-              <a>Delete</a>
+            <span slot="action" slot-scope="record">
+              <a @click="onDelete(record._id)"> Delete</a>
             </span>
           </a-table>
         </div>
@@ -41,27 +39,38 @@
     </section>
   </main>
 </template>
+
 <script>
 const columns = [
   {
     title: 'Id',
+    dataIndex: '_id',
     key: '_id',
   },
   {
     title: 'Email',
     key: 'email',
+    dataIndex: 'email',
   },
   {
-    title: 'Password',
-    key: 'password',
+    title: 'Full Name',
+    dataIndex: 'fullName',
+    key: 'fullName',
   },
   {
     title: 'Role',
     key: 'role',
+    dataIndex: 'role',
+  },
+  {
+    dataIndex: 'phone',
+    title: 'Phone',
+    key: 'phone',
   },
   {
     title: 'Action',
     key: 'action',
+    scopedSlots: { customRender: 'action' },
   },
 ]
 
@@ -70,15 +79,36 @@ export default {
   data() {
     return {
       columns,
+      user: null,
     }
   },
 
+  asyncData({ $axios }) {
+    return $axios
+      .$get(process.env.baseApiUrl + '/admin/users')
+      .then((data) => {
+        return {
+          user: data.users,
+        }
+      })
+      .catch((e) => {})
+  },
   methods: {
-    async onFetch() {
+    async fectData() {
       const result = await this.$axios.$get(
         process.env.baseApiUrl + '/admin/users'
       )
-      console.log(result)
+
+      this.user = result.users
+      console.log('helo')
+    },
+    async onDelete(id) {
+      const result = await this.$axios.$delete(
+        process.env.baseApiUrl + '/admin/' + id
+      )
+      if (result.success) {
+        this.fectData()
+      }
     },
   },
 }
