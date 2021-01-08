@@ -172,7 +172,8 @@ export default {
           this.form
         )
         if (result.success) {
-          this.$store.state.user = this.form
+          // this.$store.state.user = this.form
+          this.$store.dispatch('getUser')
           this.$notification.success({
             message: 'Lưu thành công',
           })

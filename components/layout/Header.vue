@@ -21,7 +21,7 @@
             </nuxt-link>
           </li>
           <li class="list__item">
-            <nuxt-link to="/group">
+            <nuxt-link to="/groups">
               <IconGroup />
             </nuxt-link>
           </li>

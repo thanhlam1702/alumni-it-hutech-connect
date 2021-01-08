@@ -23,7 +23,12 @@
         </div>
         <div class="user__card-connect">
           <div class="post">Bài viết: {{ posts.length }}</div>
-          <div class="follower">{{ user.followers.length }} người theo dõi</div>
+          <div class="follower">
+            {{
+              user.followers.length !== undefined ? user.followers.length : 0
+            }}
+            người theo dõi
+          </div>
           <div class="following">
             Đang theo dõi: {{ user.following.length }}
           </div>

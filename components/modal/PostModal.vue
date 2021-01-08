@@ -45,6 +45,10 @@ export default {
     isvisible: {
       type: Boolean,
     },
+    url: {
+      type: String,
+      default: '/decks',
+    },
   },
   data() {
     return {
@@ -87,7 +91,7 @@ export default {
 
       try {
         const result = await this.$axios.$post(
-          process.env.baseApiUrl + `/decks`,
+          process.env.baseApiUrl + `${this.url}`,
           formData
         )
         if (result.success === true) {

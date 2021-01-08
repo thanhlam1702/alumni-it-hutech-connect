@@ -1,0 +1,177 @@
+// group css
+
+.main-wrapper.group{
+    .content{
+        padding-top: 20px;
+    }
+}
+.group-contain{
+    display: grid;
+    grid-template-columns: 1fr 650px;
+    background: #fff;
+    border: 1px solid @cl-border-1;
+}
+.group{
+    &__left{
+        border-right: 1px solid @cl-border-1;
+        padding-bottom: 20px;
+        &-title{
+            padding-left: 20px;
+            margin-top: 20px;
+            font-weight: 600;
+            position: relative;
+            .text(18px, inherit, 20px, @text-black, initial);
+            &.detail-title{
+                display: flex;
+                align-items: center;
+            }
+            .avatar{
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+                position: relative;
+                flex-shrink: 0;
+                img{
+                    object-fit: cover;
+                    .mid-pos();
+                }
+            }
+            .name{
+                margin-left: 10px;
+            }
+            &::before{
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: @cl-border-1;
+            }
+            
+        }
+        .groups{
+            margin-top: 20px;
+            &__item{
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                padding-left: 20px;
+                cursor: pointer;
+                transition: @t @cubic;
+                &:hover{
+                    background: #efefef;
+                    transition: @t @cubic;
+                }
+                &-img{
+                    height: 50px;
+                    width: 50px;
+                    overflow: hidden;
+                    border-radius: 50%;
+                    position: relative;
+                    flex-shrink: 0;
+                    img{
+                        object-fit: cover;
+                        .mid-pos();
+                    }
+                }
+                &-info{
+                    margin-left: 10px;
+                    .name{
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: @text-black;
+                        .dot-para-text(1);
+                    }
+                }
+            }
+        }
+        &-info{
+            margin-top: 20px;
+            padding-left: 20px;
+            font-size: 16px;
+            color: @text-black;
+            .title{
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+        }
+
+    }
+    &__right{
+        width: 100%;
+        &.show{
+            padding: 10px;
+        }
+        &-post{
+            display: flex;
+            align-items: center;
+            margin: 20px;
+            box-shadow: @shadow-4;
+            padding: 10px;
+            border-radius: 6px;
+            .avatar{
+                height: 50px;
+                width: 50px;
+                position: relative;
+                border-radius: 50%;
+                overflow: hidden;
+                flex-shrink: 0;
+                img{
+                    object-fit: cover;
+                    .mid-pos();
+                }
+            }
+            .post-box{
+                padding: 10px 20px;
+                width: 100%;
+                border-radius: 20px;
+                background: #f0f2f5;
+                cursor: pointer;
+            }
+        }
+        .listgroup{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+            &__item{
+                box-shadow: @shadow-2;
+                &-img{
+                    width: 100%;
+                    height: 220px;
+                    position: relative;
+                    img{
+                        object-fit: cover;
+                        .mid-pos();
+                    }
+                }
+                &-info{
+                    padding: 10px;
+                    font-size: 16px;
+                    color: @text-black;
+                    .name{
+                        font-size: 22px;
+                        font-weight: 600;
+                        .dot-para-text(3);
+                    }
+                    .btn-join{
+                        text-align: center;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// change w container
+// @media (min-width: 1200px){
+//     .main-wrapper.group{
+//         .container{
+//             max-width: 960px;
+//         }
+//     }
+// }
+

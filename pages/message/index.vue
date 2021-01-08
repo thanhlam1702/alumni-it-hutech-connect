@@ -43,5 +43,10 @@ export default {
       item.id === this.$route.params.id ? (this.name = item.name) : null
     )
   },
+  head() {
+    return {
+      title: `Tin nhắn | Alumni IT Hutech`,
+    }
+  },
 }
 </script>

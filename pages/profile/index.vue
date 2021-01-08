@@ -15,6 +15,7 @@
               <a><a-icon type="plus" /></a>
               <PostModal
                 :isvisible="modalPost"
+                :url="'/decks'"
                 @handdleCancelModal="handdleCancelModal"
                 @fetchData="fectData"
               />
