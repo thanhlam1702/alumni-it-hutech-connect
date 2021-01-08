@@ -5,19 +5,15 @@
         padding-top: 20px;
     }
 }
-.group-contain{
-    display: grid;
-    grid-template-columns: 1fr 650px;
-    background: #fff;
-    border: 1px solid @cl-border-1;
-}
 .group{
     &__left{
-        border-right: 1px solid @cl-border-1;
-        padding-bottom: 20px;
+        border: 1px solid @cl-border-1;
+        background: #fff;
+        border-radius: 6px;
+        width: 400px;
+        position: fixed;
+        padding: 20px;
         &-title{
-            padding-left: 20px;
-            margin-top: 20px;
             font-weight: 600;
             position: relative;
             .text(18px, inherit, 20px, @text-black, initial);
@@ -40,6 +36,57 @@
             .name{
                 margin-left: 10px;
             }
+            .control{
+                position: absolute;
+                right: 0;
+                height: 100%;
+                cursor: pointer;
+                .flex(center, center);
+                span{
+                    height: 4px;
+                    width: 4px;
+                    background: #050505;
+                    border-radius: 50%;
+                    margin-right: 4px;
+                }
+            }
+            .dropmore{
+                position: absolute;
+                right: 0;
+                bottom: -30px;
+                background: #fff;
+                padding: 10px;
+                border-radius: 4px;
+                box-shadow: @shadow-3;
+                transition: @t @cubic;
+                transform: translateY(10px);
+                .hidden();
+                &__item{
+                    cursor: pointer;
+                    .flex-align(center);
+                    .icon{
+                        height: 20px;
+                        width: 20px;
+                        margin-right: 10px;
+                        flex-shrink: 0;
+                    }
+                }
+                &.active{
+                    transform: translateY(0);
+                    transition: @t @cubic;
+                    .visible();
+                }
+                &::before{
+                    content: '';
+                    position: absolute;
+                    width: 20px;
+                    height: 10px;
+                    right: 5px;
+                    top: -10px;
+                    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+                    background: #fff;
+                }
+            }
             &::before{
                 content: '';
                 position: absolute;
@@ -52,7 +99,7 @@
             
         }
         .groups{
-            margin-top: 20px;
+            margin-top: 30px;
             &__item{
                 display: flex;
                 align-items: center;
@@ -88,12 +135,11 @@
             }
         }
         &-info{
-            margin-top: 20px;
-            padding-left: 20px;
+            margin-top: 30px;
             font-size: 16px;
             color: @text-black;
             .title{
-                font-size: 20px;
+                font-size: 24px;
                 font-weight: 600;
                 margin-bottom: 20px;
             }
@@ -101,17 +147,19 @@
 
     }
     &__right{
-        width: 100%;
-        &.show{
-            padding: 10px;
+        width: 650px;
+        margin: auto;
+        margin-right: 100px;
+        .posts__item{
+            border-radius: 6px;
         }
         &-post{
             display: flex;
             align-items: center;
-            margin: 20px;
             box-shadow: @shadow-4;
             padding: 10px;
             border-radius: 6px;
+            background: #fff;
             .avatar{
                 height: 50px;
                 width: 50px;

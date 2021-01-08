@@ -58,11 +58,15 @@
 </template>
 <script>
 export default {
-  asyncData({ $axios }) {
+  asyncData({ $axios, store }) {
     return $axios
       .$get(process.env.baseApiUrl + '/groups')
       .then((data) => {
-        return { groups: data.groups }
+        return {
+          groups: data.groups.filter(
+            (item) => !item.users.includes(store.state.user._id)
+          ),
+        }
       })
       .catch((e) => {})
   },
@@ -72,18 +76,26 @@ export default {
       userGroup: this.$store.state.user.groups,
     }
   },
-  mounted() {
-    console.log(this.groups)
-  },
-
   methods: {
     async onJoin(id) {
       try {
         const result = await this.$axios.$post(
           process.env.baseApiUrl + '/groups/' + id
         )
-        console.log(result)
+        if (result.success) {
+          this.fetGroup()
+        }
       } catch (error) {}
+    },
+    async fetGroup() {
+      const result = await this.$axios.$get(process.env.baseApiUrl + '/groups')
+      if (result.success) {
+        this.groups = result.groups.filter(
+          (item) => !item.users.includes('5ff7fe6258a2da79d1e91662')
+        )
+        await this.$store.dispatch('getUser')
+        this.userGroup = this.$store.state.user.groups
+      }
     },
   },
 }

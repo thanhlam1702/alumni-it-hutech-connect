@@ -11,6 +11,19 @@
                 <img v-else src="~/assets/images/default_group.png" alt="" />
               </div>
               <div class="name">{{ group.name }}</div>
+              <div class="control" @click="activeDropmore">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="dropmore">
+                <div class="dropmore__item" @click="onOutGroup">
+                  <i class="icon">
+                    <img src="~/assets/images/icon/log-out.svg" alt="" />
+                  </i>
+                  <span>Rời khỏi nhóm</span>
+                </div>
+              </div>
             </div>
             <div class="group__left-info">
               <div class="title">Giới thiệu</div>
@@ -68,9 +81,33 @@ export default {
       modalPost: false,
     }
   },
+  mounted() {
+    // Menu dropmenu when click outsite and remove active class
+    const dropmenu = document.querySelector('.dropmore')
+    document.addEventListener('click', (e) => {
+      e.preventDefault()
+      dropmenu.classList.remove('active')
+    })
+  },
   methods: {
     handdleCancelModal() {
       this.modalPost = false
+    },
+    activeDropmore() {
+      event.stopPropagation()
+      const dropmenu = document.querySelector('.dropmore')
+      dropmenu.classList.toggle('active')
+    },
+    async onOutGroup() {
+      try {
+        const result = await this.$axios.$post(
+          process.env.baseApiUrl + '/groups/' + this.$route.params.id
+        )
+        if (result.success) {
+          this.$store.dispatch('getUser')
+          this.$router.push('/groups')
+        }
+      } catch (error) {}
     },
     async fectData() {
       const result = await this.$axios.$get(
