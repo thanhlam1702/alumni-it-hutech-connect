@@ -167,9 +167,17 @@ export default {
       const dropmenu = document.querySelector('.dropmenu')
       dropmenu.classList.toggle('active')
     },
-    onSearch(value) {
-      // console.log(value)
-      // console.log(this.$route)
+
+    async onSearch(value) {
+      try {
+        const result = await this.$axios.$post(
+          process.env.baseApiUrl + '/admin/users/?name=' + value
+        )
+        if (result.success) {
+          await this.$store.dispatch('setSearch', result.users)
+          this.$router.push('/search')
+        }
+      } catch (error) {}
     },
   },
 }

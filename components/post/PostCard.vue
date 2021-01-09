@@ -123,7 +123,6 @@ export default {
     },
     openModal(id) {
       this.idPost = id
-      // this.$router.push('/test')
       const modal = document.createElement('div')
       modal.classList = 'modal-contain'
       document.querySelector('body').appendChild(modal)

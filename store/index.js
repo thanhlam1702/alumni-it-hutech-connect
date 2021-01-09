@@ -4,6 +4,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       user: {},
+      search: [],
     },
     mutations: {
       setUser(state, user) {
@@ -11,6 +12,9 @@ const createStore = () => {
       },
       editUser(state, editUser) {
         state.user = editUser
+      },
+      setSearch(state, result) {
+        state.search = result
       },
     },
     actions: {
@@ -46,10 +50,16 @@ const createStore = () => {
           })
           .catch(() => {})
       },
+      setSearch(vuexContext, result) {
+        vuexContext.commit('setSearch', result)
+      },
     },
     getters: {
       user(state) {
         return state.user
+      },
+      search(state) {
+        return state.search
       },
     },
   })
