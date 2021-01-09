@@ -104,7 +104,7 @@ export default {
           process.env.baseApiUrl + '/groups/' + this.$route.params.id
         )
         if (result.success) {
-          this.$store.dispatch('getUser')
+          await this.$store.dispatch('getUser')
           this.$router.push('/groups')
         }
       } catch (error) {}

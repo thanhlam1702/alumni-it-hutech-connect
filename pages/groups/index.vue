@@ -91,7 +91,7 @@ export default {
       const result = await this.$axios.$get(process.env.baseApiUrl + '/groups')
       if (result.success) {
         this.groups = result.groups.filter(
-          (item) => !item.users.includes('5ff7fe6258a2da79d1e91662')
+          (item) => !item.users.includes(this.$store.state.user._id)
         )
         await this.$store.dispatch('getUser')
         this.userGroup = this.$store.state.user.groups
