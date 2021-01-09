@@ -36,7 +36,9 @@
               :scroll="{ x: 500, y: 500 }"
             >
               <a slot="name" slot-scope="text">{{ text }}</a>
-              <a slot="action" slot-scope="" href="javascript:;">Delete</a>
+              <span slot="action" slot-scope="record">
+                <a @click="onDelete(record._id)"> Delete</a>
+              </span>
             </a-table>
           </template>
         </div>
@@ -59,8 +61,8 @@ const columns = [
   },
 
   {
-    title: 'Decription',
-    dataIndex: 'Topic',
+    title: 'Description',
+    dataIndex: 'description',
     key: 'description',
     ellipsis: true,
   },
@@ -93,6 +95,21 @@ export default {
         }
       })
       .catch((e) => {})
+  },
+  methods: {
+    async fetchData() {
+      const result = await this.$axios.$get(process.env.baseApiUrl + '/groups')
+      this.group = result.groups
+      console.log('helo')
+    },
+    // async onDelete(id) {
+    //   const result = await this.$axios.$delete(
+    //     process.env.baseApiUrl + '/groups/' + id
+    //   )
+    //   if (result.success) {
+    //     this.fetchData()
+    //   }
+    // },
   },
 }
 </script>
