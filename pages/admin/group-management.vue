@@ -80,12 +80,6 @@ const columns = [
 ]
 export default {
   layout: 'admin',
-  data() {
-    return {
-      columns,
-      group: null,
-    }
-  },
   asyncData({ $axios }) {
     return $axios
       .$get(process.env.baseApiUrl + '/groups')
@@ -96,20 +90,32 @@ export default {
       })
       .catch((e) => {})
   },
+  data() {
+    return {
+      columns,
+      group: null,
+    }
+  },
   methods: {
     async fetchData() {
       const result = await this.$axios.$get(process.env.baseApiUrl + '/groups')
+      console.log(result)
       this.group = result.groups
       console.log('helo')
     },
-    // async onDelete(id) {
-    //   const result = await this.$axios.$delete(
-    //     process.env.baseApiUrl + '/groups/' + id
-    //   )
-    //   if (result.success) {
-    //     this.fetchData()
-    //   }
-    // },
+    onDelete(id) {
+      try {
+        // const result = await this.$axios.$delete(
+        //   process.env.baseApiUrl + '/groups/' + id
+        // )
+        // await console.log(result)
+        this.$axios
+          .$delete(process.env.baseApiUrl + '/groups/' + id)
+          .then((data) => {
+            console.log(data)
+          })
+      } catch (error) {}
+    },
   },
 }
 </script>
