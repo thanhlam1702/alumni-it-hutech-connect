@@ -59,7 +59,7 @@
               >
             </li>
             <li class="dropmenu__item">
-              <nuxt-link to="/setting"
+              <nuxt-link to="/profile/edit"
                 ><a-icon type="setting" class="icon" />Cài đặt</nuxt-link
               >
             </li>
@@ -75,7 +75,7 @@
     <div class="container-fluid">
       <div class="logo">
         <nuxt-link to="/"
-          ><img src="~/assets/images/logo.svg" alt="IT alimni association"
+          ><img src="~/assets/images/logo.svg" alt="IT alumni association"
         /></nuxt-link>
       </div>
       <ul class="menu">

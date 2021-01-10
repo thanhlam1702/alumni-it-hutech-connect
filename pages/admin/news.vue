@@ -32,7 +32,9 @@
           <template>
             <a-table :columns="columns" :data-source="data">
               <a slot="name" slot-scope="text">{{ text }}</a>
-              <a slot="action" slot-scope="" href="javascript:;">Delete</a>
+              <a slot="action" slot-scope="" href="javascript:;">
+                <a>Delete</a>
+              </a>
             </a-table>
           </template>
         </div>

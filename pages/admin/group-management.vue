@@ -30,9 +30,15 @@
 
         <div class="group__management-infor">
           <template>
-            <a-table :columns="columns" :scroll="{ x: 500, y: 500 }">
+            <a-table
+              :columns="columns"
+              :data-source="group"
+              :scroll="{ x: 500, y: 500 }"
+            >
               <a slot="name" slot-scope="text">{{ text }}</a>
-              <a slot="action" slot-scope="" href="javascript:;">Delete</a>
+              <span slot="action" slot-scope="record">
+                <a @click="onDelete(record._id)"> Delete</a>
+              </span>
             </a-table>
           </template>
         </div>
@@ -44,31 +50,25 @@
 const columns = [
   {
     title: 'GroupID',
-    dataIndex: 'groupId',
-    key: 'grouId',
-    scopedSlots: { customRender: 'groupId' },
+    dataIndex: '_id',
+    key: 'groupId',
   },
   {
     title: 'Group name',
-    dataIndex: 'groupName',
+    dataIndex: 'name',
     key: 'groupName',
     ellipsis: true,
   },
+
   {
-    title: 'Admin',
-    dataIndex: 'UserID',
-    key: '',
-    width: 80,
-  },
-  {
-    title: 'Decription',
-    dataIndex: 'Topic',
-    key: 'decription',
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
     ellipsis: true,
   },
   {
-    title: 'Member',
-    dataIndex: '',
+    title: 'Member Count',
+    dataIndex: 'users.length',
     key: '',
   },
   {
@@ -80,10 +80,42 @@ const columns = [
 ]
 export default {
   layout: 'admin',
+  asyncData({ $axios }) {
+    return $axios
+      .$get(process.env.baseApiUrl + '/groups')
+      .then((data) => {
+        return {
+          group: data.groups,
+        }
+      })
+      .catch((e) => {})
+  },
   data() {
     return {
       columns,
+      group: null,
     }
+  },
+  methods: {
+    async fetchData() {
+      const result = await this.$axios.$get(process.env.baseApiUrl + '/groups')
+      console.log(result)
+      this.group = result.groups
+      console.log('helo')
+    },
+    onDelete(id) {
+      try {
+        // const result = await this.$axios.$delete(
+        //   process.env.baseApiUrl + '/groups/' + id
+        // )
+        // await console.log(result)
+        this.$axios
+          .$delete(process.env.baseApiUrl + '/groups/' + id)
+          .then((data) => {
+            console.log(data)
+          })
+      } catch (error) {}
+    },
   },
 }
 </script>

@@ -23,9 +23,15 @@
       <div class="post__management">
         <div class="post__management-infor">
           <template>
-            <a-table :columns="columns" :scroll="{ x: 500, y: 500 }">
+            <a-table
+              :columns="columns"
+              :data-source="deck"
+              :scroll="{ x: 500, y: 500 }"
+            >
               <a slot="name" slot-scope="text">{{ text }}</a>
-              <a slot="action" slot-scope="" href="javascript:;">Delete</a>
+              <span slot="action" slot-scope="record">
+                <a @click="onDelete(record._id)">Delete</a>
+              </span>
             </a-table>
           </template>
         </div>
@@ -37,27 +43,26 @@
 const columns = [
   {
     title: 'Id',
-    dataIndex: 'postID',
-    key: 'name',
-    scopedSlots: { customRender: 'name' },
+    dataIndex: '_id',
+    key: 'id',
+    scopedSlots: { customRender: 'id' },
   },
   {
     title: 'Title',
-    dataIndex: 'postTitle',
+    dataIndex: 'content',
     key: 'age',
     ellipsis: true,
   },
   {
     title: 'Author',
-    dataIndex: 'UserID',
-    key: 'address 1',
-    width: 80,
+    dataIndex: 'owner.name',
+    key: 'owner',
+    ellipsis: true,
   },
   {
-    title: 'Topic',
-    dataIndex: 'Topic',
-    key: 'address 2',
-    ellipsis: true,
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
   },
   {
     title: 'Action',
@@ -71,7 +76,34 @@ export default {
   data() {
     return {
       columns,
+      deck: null,
     }
+  },
+  asyncData({ $axios }) {
+    return $axios
+      .$get(process.env.baseApiUrl + '/decks')
+      .then((data) => {
+        return {
+          deck: data.decks,
+        }
+      })
+      .catch((e) => {})
+  },
+  methods: {
+    async fetchData() {
+      const result = await this.$axios.$get(process.env.baseApiUrl + '/decks')
+      this.deck = result.decks
+      console.log('da xoa')
+    },
+    async onDelete(id) {
+      const result = await this.$axios.$delete(
+        process.env.baseApiUrl + '/decks/' + id
+      )
+
+      if (result.success) {
+        this.fetchData()
+      }
+    },
   },
 }
 </script>

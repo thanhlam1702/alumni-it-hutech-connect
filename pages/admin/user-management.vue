@@ -24,34 +24,14 @@
         <div class="user__management-infor">
           <a-table
             :columns="columns"
-            :data-source="data"
+            :data-source="user"
             :scroll="{ x: 500, y: 500 }"
           >
             <a slot="name" slot-scope="text">{{ text }}</a>
             <span slot="customTitle">Username </span>
-            <span slot="role" slot-scope="roles">
-              <a-tag
-                v-for="role in roles"
-                :key="role"
-                :color="
-                  role === 'loser'
-                    ? 'volcano'
-                    : role.length > 5
-                    ? 'geekblue'
-                    : 'green'
-                "
-              >
-                {{ role.toUpperCase() }}
-              </a-tag>
-            </span>
-            <span slot="action" slot-scope="text, record">
-              <a>Invite 一 {{ record.name }}</a>
-              <a-divider type="vertical" />
-              <a>Delete</a>
-              <a-divider type="vertical" />
-              <a class="ant-dropdown-link">
-                More actions <a-icon type="down" />
-              </a>
+            <span slot="role"> </span>
+            <span slot="action" slot-scope="record">
+              <a @click="onDelete(record._id)"> Delete</a>
             </span>
           </a-table>
         </div>
@@ -59,29 +39,33 @@
     </section>
   </main>
 </template>
+
 <script>
 const columns = [
   {
-    dataIndex: 'name',
-    key: 'name',
-    slots: { title: 'customTitle' },
-    scopedSlots: { customRender: 'name' },
+    title: 'Id',
+    dataIndex: '_id',
+    key: '_id',
   },
   {
     title: 'Email',
-    dataIndex: 'age',
-    key: 'age',
+    key: 'email',
+    dataIndex: 'email',
   },
   {
-    title: 'Password',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Full Name',
+    dataIndex: 'fullName',
+    key: 'fullName',
   },
   {
-    title: 'role',
-    key: 'roles',
-    dataIndex: 'roles',
-    scopedSlots: { customRender: 'role' },
+    title: 'Role',
+    key: 'role',
+    dataIndex: 'role',
+  },
+  {
+    dataIndex: 'phone',
+    title: 'Phone',
+    key: 'phone',
   },
   {
     title: 'Action',
@@ -90,117 +74,42 @@ const columns = [
   },
 ]
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    roles: ['Teacher', 'software'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
-
 export default {
   layout: 'admin',
   data() {
     return {
-      data,
       columns,
+      user: null,
     }
   },
-  // beforeMount() {
-  //   return (this.user = this.$store.getters.user)
-  // },
+
+  asyncData({ $axios }) {
+    return $axios
+      .$get(process.env.baseApiUrl + '/admin/users')
+      .then((data) => {
+        return {
+          user: data.users,
+        }
+      })
+      .catch((e) => {})
+  },
+  methods: {
+    async fectData() {
+      const result = await this.$axios.$get(
+        process.env.baseApiUrl + '/admin/users'
+      )
+
+      this.user = result.users
+      console.log('helo')
+    },
+    async onDelete(id) {
+      const result = await this.$axios.$delete(
+        process.env.baseApiUrl + '/admin/' + id
+      )
+      if (result.success) {
+        this.fectData()
+      }
+    },
+  },
 }
 </script>
