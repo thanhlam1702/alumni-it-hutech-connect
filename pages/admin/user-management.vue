@@ -31,7 +31,7 @@
             <span slot="customTitle">Username </span>
             <span slot="role"> </span>
             <span slot="action" slot-scope="record">
-              <a @click="onDelete(record._id)"> Delete</a>
+              <a @click="showDeleteConfirm(record._id)"> Delete</a>
             </span>
           </a-table>
         </div>
@@ -76,12 +76,6 @@ const columns = [
 
 export default {
   layout: 'admin',
-  data() {
-    return {
-      columns,
-      user: null,
-    }
-  },
 
   asyncData({ $axios }) {
     return $axios
@@ -93,6 +87,12 @@ export default {
       })
       .catch((e) => {})
   },
+  data() {
+    return {
+      columns,
+      user: null,
+    }
+  },
   methods: {
     async fectData() {
       const result = await this.$axios.$get(
@@ -101,6 +101,18 @@ export default {
 
       this.user = result.users
       console.log('helo')
+    },
+    showDeleteConfirm(id) {
+      const thisHandle = this
+      this.$confirm({
+        title: 'Bạn có chắc chắn muốn xóa user này?',
+        okText: 'Xóa',
+        okType: 'danger',
+        cancelText: 'Hủy',
+        onOk() {
+          thisHandle.onDelete(id)
+        },
+      })
     },
     async onDelete(id) {
       const result = await this.$axios.$delete(

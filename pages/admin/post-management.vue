@@ -30,7 +30,7 @@
             >
               <a slot="name" slot-scope="text">{{ text }}</a>
               <span slot="action" slot-scope="record">
-                <a @click="onDelete(record._id)">Delete</a>
+                <a @click="showDeleteConfirm(record._id)">Delete</a>
               </span>
             </a-table>
           </template>
@@ -73,12 +73,6 @@ const columns = [
 ]
 export default {
   layout: 'admin',
-  data() {
-    return {
-      columns,
-      deck: null,
-    }
-  },
   asyncData({ $axios }) {
     return $axios
       .$get(process.env.baseApiUrl + '/decks')
@@ -89,11 +83,29 @@ export default {
       })
       .catch((e) => {})
   },
+  data() {
+    return {
+      columns,
+      deck: null,
+    }
+  },
   methods: {
     async fetchData() {
       const result = await this.$axios.$get(process.env.baseApiUrl + '/decks')
       this.deck = result.decks
       console.log('da xoa')
+    },
+    showDeleteConfirm(id) {
+      const thisHandle = this
+      this.$confirm({
+        title: 'Bạn có chắc chắn muốn xóa post này?',
+        okText: 'Xóa',
+        okType: 'danger',
+        cancelText: 'Hủy',
+        onOk() {
+          thisHandle.onDelete(id)
+        },
+      })
     },
     async onDelete(id) {
       const result = await this.$axios.$delete(

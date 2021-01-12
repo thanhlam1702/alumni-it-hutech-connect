@@ -56,9 +56,15 @@ export default {
         )
         if (result.success) {
           console.log('hoan thanh')
+          this.$notification.success({
+            message: 'Lưu thành công',
+          })
+          this.$router.push('/admin/group-management')
         }
       } catch (err) {
-        console.log(err)
+        this.$notification.error({
+          message: 'Lưu không thành công',
+        })
       }
     },
     onChange(e) {
