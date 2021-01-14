@@ -23,9 +23,15 @@
               {{ name }}
             </div>
           </div>
-          <div class="message__right-content">
-            <!-- content chat -->
-          </div>
+          <!-- content chat -->
+          <ul class="message__right-content">
+            <li v-for="(message, index) in messages" :key="index">
+              <span :class="{ 'float-right': message.type === 0 }">{{
+                message.message
+              }}</span>
+              <br />
+            </li>
+          </ul>
           <div class="message__right-enter">
             <div class="placeholder">Ae</div>
             <div
@@ -33,62 +39,85 @@
               contenteditable="true"
               @input="enterText"
             ></div>
-            <div class="icon-send">
+            <div class="icon-send" @click="send">
               <i class="icon">
                 <img src="~/assets/images/icon/send-mess.svg" alt="" />
               </i>
             </div>
           </div>
-          <!-- <div class="message__right-control">
-            <form class="form-mess">
-              <textarea
-                name="mess-box"
-                class="form-mess__box"
-                placeholder="Ae"
-              ></textarea>
-            </form>
-            <div class="icon-send">
-              <i class="icon">
-                <img src="~/assets/images/icon/send-mess.svg" alt="" />
-              </i>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
   </main>
 </template>
 <script>
+import io from 'socket.io-client'
+const socket = io(process.env.baseApiUrl)
 export default {
   data() {
     return {
+      newMessage: null,
+      messages: [],
+      typing: false,
+      ready: false,
       name: '',
       dataChats: [
         { name: 'Tuan Huynh', id: '123' },
-        { name: 'Van A', id: '124' },
-        { name: 'Van B', id: '125' },
-        { name: 'Van C', id: '126' },
-        { name: 'Van D', id: '127' },
-        { name: 'Cao Tuan Tai', id: '128' },
-        { name: 'Tran Thi Mong Mo', id: '103' },
-        { name: 'Ly Dai Phuc', id: '139' },
-        { name: 'Ly Dai Phuc', id: '149' },
-        { name: 'Ly Dai Phuc', id: '169' },
+        { name: 'Thanh Lam', id: '124' },
       ],
     }
+  },
+  watch: {
+    newMessage(value) {
+      value ? socket.emit('typing') : socket.emit('stopTyping')
+    },
   },
   mounted() {
     this.dataChats.filter((item) =>
       item.id === this.$route.params.id ? (this.name = item.name) : null
     )
   },
+  created() {
+    socket.emit('Created', {
+      user: `$auth.$state.user.email`,
+    })
+    socket.on('Created', (data) => {})
+    socket.on('chat-message', (data) => {
+      this.messages.push({ message: data, type: 1 })
+    })
+    socket.on('typing', (data) => {
+      this.typing = true
+    })
+    socket.on('stopTyping', (data) => {
+      this.typing = false
+    })
+    socket.on('joined', (data) => {
+      this.ready = true
+    })
+  },
   methods: {
+    send() {
+      this.messages.push({ message: this.newMessage, type: 0 })
+      socket.emit('chat-message', this.newMessage)
+      this.newMessage = null
+      document.querySelector('.message__right-enter .content').innerHTML = ''
+      document
+        .querySelector('.message__right-enter .placeholder')
+        .classList.remove('hidden')
+      document.querySelector('.icon-send').classList.remove('notActive')
+    },
+    addName() {
+      this.ready = true
+      socket.emit('joined')
+    },
     enterText(e) {
       if (e.target.innerHTML !== '') {
         document
           .querySelector('.message__right-enter .placeholder')
           .classList.add('hidden')
         document.querySelector('.icon-send').classList.add('notActive')
+        // text of chat
+        this.newMessage = e.target.innerHTML
       } else {
         document
           .querySelector('.message__right-enter .placeholder')
@@ -99,3 +128,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.float-right {
+  float: right;
+}
+</style>
