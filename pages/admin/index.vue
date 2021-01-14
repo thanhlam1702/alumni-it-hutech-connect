@@ -44,12 +44,12 @@
 <script>
 export default {
   layout: 'auth',
-  middleware: 'auth',
-  auth: {
-    strategies: {
-      admin: false,
-    },
-  },
+  // middleware: 'auth',
+  // auth: {
+  //   strategies: {
+  //     local: false,
+  //   },
+  // },
   data() {
     return {
       form: {
