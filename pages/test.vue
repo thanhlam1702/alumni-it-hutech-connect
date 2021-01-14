@@ -1,3 +1,8 @@
+<style>
+.float-right {
+  float: right;
+}
+</style>
 <template>
   <main class="main-wrapper message-page">
     <div class="container">
@@ -120,8 +125,3 @@ export default {
   },
 }
 </script>
-<style>
-.float-right {
-  float: right;
-}
-</style>
