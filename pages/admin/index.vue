@@ -4,9 +4,9 @@
       <div class="form__control">
         <h3>Admin</h3>
         <a-form-model ref="ruleForm" :model="form" :rules="rules">
-          <label for="">Tài khoản / MSSV:</label>
+          <label for="">Tài khoản:</label>
           <a-form-model-item ref="name" prop="name">
-            <a-input v-model="form.name" placeholder="Nhập tài khoản / MSSV">
+            <a-input v-model="form.name" placeholder="Nhập tài khoản">
               <a-icon slot="prefix" type="user" />
             </a-input>
           </a-form-model-item>
@@ -44,12 +44,12 @@
 <script>
 export default {
   layout: 'auth',
-  //   middleware: 'admin',
-  //   admin: {
-  //     strategies: {
-  //       admin: false,
-  //     },
-  //   },
+  middleware: 'auth',
+  auth: {
+    strategies: {
+      admin: false,
+    },
+  },
   data() {
     return {
       form: {
@@ -70,6 +70,8 @@ export default {
   },
   methods: {
     async onSubmit() {
+      console.log(this.form.name)
+      console.log(this.form.password)
       this.$refs.ruleForm.validate((valid) => {})
       try {
         await this.$auth.loginWith('admin', {
@@ -80,6 +82,7 @@ export default {
         })
         this.openNotification('success')
       } catch (err) {
+        console.log(err)
         this.openNotification('error')
       }
     },
