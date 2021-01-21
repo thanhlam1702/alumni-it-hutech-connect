@@ -1,5 +1,5 @@
 <template>
-  <main class="admin">
+  <main class="main-wrapper admin">
     <section class="management-content">
       <div class="nav">
         <ul class="nav__options">
