@@ -1,5 +1,5 @@
 <template>
-  <main class="admin">
+  <main class="main-wrapper admin">
     <section class="management-content" style="padding: 15px">
       <div class="nav">
         <ul class="nav__options">
@@ -28,9 +28,19 @@
               :data-source="deck"
               :scroll="{ x: 500, y: 500 }"
             >
+              <!-- {{ include('alert.html.twig') }} -->
+              <span
+                slot="content"
+                slot-scope="text, record"
+                v-html="record.content"
+              >
+              </span>
               <a slot="name" slot-scope="text">{{ text }}</a>
-              <span slot="action" slot-scope="record">
+              <span slot="action" slot-scope="text, record">
                 <a @click="showDeleteConfirm(record._id)">Delete</a>
+                <a-divider type="vertical" />
+
+                <router-link :to="`/posts/${record._id}`">View</router-link>
               </span>
             </a-table>
           </template>
@@ -52,11 +62,12 @@ const columns = [
     dataIndex: 'content',
     key: 'age',
     ellipsis: true,
+    scopedSlots: { customRender: 'content' },
   },
   {
     title: 'Author',
     dataIndex: 'owner.name',
-    key: 'owner',
+    key: '',
     ellipsis: true,
   },
   {

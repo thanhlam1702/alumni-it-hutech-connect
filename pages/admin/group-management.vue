@@ -1,5 +1,5 @@
 <template>
-  <div class="admin">
+  <div class="main-wrapper admin">
     <section class="management-content" style="padding: 15px">
       <div class="nav">
         <ul class="nav__options">
@@ -103,18 +103,15 @@ export default {
       this.group = result.groups
       console.log('helo')
     },
-    onDelete(id) {
+    async onDelete(id) {
       try {
-        // const result = await this.$axios.$delete(
-        //   process.env.baseApiUrl + '/groups/' + id
-        // )
-        // await console.log(result)
-        this.$axios
-          .$delete(process.env.baseApiUrl + '/groups/' + id)
-          .then((data) => {
-            console.log(data)
-          })
-      } catch (error) {}
+        const result = await this.$axios.$delete(
+          process.env.baseApiUrl + '/groups/' + id
+        )
+        await console.log(result)
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 }
