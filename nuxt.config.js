@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'alumni-it-hutech-connect',
+    title: 'Hutech It Alumni Association',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -81,20 +81,21 @@ export default {
     },
   },
   env: {
-    baseApiUrl: 'http://localhost:3000',
+    // http://localhost:3000
+    baseApiUrl: 'https://hutech-alumnni-social.herokuapp.com',
   },
   auth: {
     strategies: {
       local: {
         endpoints: {
           // eslint-disable-next-line prettier/prettier
-          login: { url: 'http://localhost:3000/api/auth/login', method: 'post', propertyName: 'token' },
+          login: { url: 'https://hutech-alumnni-social.herokuapp.com/api/auth/login', method: 'post', propertyName: 'token' },
           logout: {
-            url: 'http://localhost:3000/api/auth/logout',
+            url: 'https://hutech-alumnni-social.herokuapp.com/api/auth/logout',
             method: 'post',
           },
           // eslint-disable-next-line prettier/prettier
-          user: { url: 'http://localhost:3000/api/auth/user', method: 'get', propertyName: 'user' },
+          user: { url: 'https://hutech-alumnni-social.herokuapp.com/api/auth/user', method: 'get', propertyName: 'user' },
           // eslint-disable-next-line prettier/prettier
           propertyName: "token",
         },
@@ -103,9 +104,9 @@ export default {
       admin: {
         endpoints: {
           // eslint-disable-next-line prettier/prettier
-          login: { url: 'http://localhost:3000/admin/login', method: 'post', propertyName: 'token' },
+          login: { url: 'https://hutech-alumnni-social.herokuapp.com/admin/login', method: 'post', propertyName: 'token' },
           logout: {
-            url: 'http://localhost:3000/admin/logout',
+            url: 'https://hutech-alumnni-social.herokuapp.com/admin/logout',
             method: 'post',
           },
           // eslint-disable-next-line prettier/prettier

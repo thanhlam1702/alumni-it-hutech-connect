@@ -61,10 +61,7 @@ export default {
       typing: false,
       ready: false,
       name: '',
-      dataChats: [
-        { name: 'Tuan Huynh', id: '123' },
-        { name: 'Thanh Lam', id: '124' },
-      ],
+      dataChats: [{ name: 'Khoa 2017', id: '123' }],
     }
   },
   watch: {

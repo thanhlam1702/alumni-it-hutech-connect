@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      groups: null,
+      groups: [],
       userGroup: this.$store.state.user.groups,
     }
   },

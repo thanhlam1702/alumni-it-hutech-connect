@@ -142,6 +142,7 @@ export default {
           process.env.baseApiUrl + `/api/auth/user/${this.idPost}`
         )
         if (result.success === true) {
+          await this.$store.dispatch('getUser')
           this.$notification.success({
             message: 'Lưu thành công',
           })

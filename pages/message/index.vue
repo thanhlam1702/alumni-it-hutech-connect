@@ -24,18 +24,7 @@ export default {
   data() {
     return {
       name: '',
-      dataChats: [
-        { name: 'Tuan Huynh', id: '123' },
-        { name: 'Van A', id: '124' },
-        { name: 'Van B', id: '125' },
-        { name: 'Van C', id: '126' },
-        { name: 'Van D', id: '127' },
-        { name: 'Cao Tuan Tai', id: '128' },
-        { name: 'Tran Thi Mong Mo', id: '103' },
-        { name: 'Ly Dai Phuc', id: '139' },
-        { name: 'Ly Dai Phuc', id: '149' },
-        { name: 'Ly Dai Phuc', id: '169' },
-      ],
+      dataChats: [{ name: 'Khoa 2017', id: '123' }],
     }
   },
   mounted() {

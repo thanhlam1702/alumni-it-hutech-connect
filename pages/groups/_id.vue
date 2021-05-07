@@ -40,7 +40,12 @@
           <div class="group__right">
             <div class="group__right-post">
               <div class="avatar">
-                <img :src="this.$store.state.user.avatar" alt="" />
+                <img
+                  v-if="this.$store.getters.user.avatar !== undefined"
+                  :src="this.$store.getters.user.avatar"
+                  alt=""
+                />
+                <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
               </div>
               <div class="post-box" @click="modalPost = true">Ae</div>
               <PostModal

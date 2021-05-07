@@ -7,13 +7,11 @@
           <div class="profile__user-avatar">
             <div class="img">
               <img
-                :src="
-                  this.$store.getters.user.avatar !== undefined
-                    ? this.$store.getters.user.avatar
-                    : '/_nuxt/assets/images/avatart-default.jpg'
-                "
-                alt="Alumni IT Hutech Connect"
+                v-if="this.$store.getters.user.avatar !== undefined"
+                :src="this.$store.getters.user.avatar"
+                alt=""
               />
+              <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
             </div>
             <div class="change-avatar" @click="showModal">
               <i class="icon">
@@ -173,7 +171,7 @@ export default {
         )
         if (result.success) {
           // this.$store.state.user = this.form
-          this.$store.dispatch('getUser')
+          await this.$store.dispatch('getUser')
           this.$notification.success({
             message: 'Lưu thành công',
           })

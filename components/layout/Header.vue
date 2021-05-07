@@ -39,13 +39,11 @@
         <div class="nav__right-user">
           <div class="img-avatar" @click="activeDropMenu">
             <img
-              :src="
-                this.$store.getters.user.avatar
-                  ? this.$store.getters.user.avatar
-                  : '/_nuxt/assets/images/avatart-default.jpg'
-              "
-              alt="Alumni IT Hutech Connect"
+              v-if="this.$store.getters.user.avatar !== undefined"
+              :src="this.$store.getters.user.avatar"
+              alt=""
             />
+            <img v-else src="~/assets/images/avatart-default.jpg" alt="" />
           </div>
           <ul class="dropmenu">
             <li class="dropmenu__item">
